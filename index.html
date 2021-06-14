@@ -99,7 +99,7 @@ function updateTable() {
       d.id = k + "_" + i;
       document.getElementById("dataGrid").appendChild(d)
 
-      if(jsn instanceof String) {
+      if(typeof jsn === 'string' || jsn instanceof String) {
         // Its not json, just dump the text
         document.getElementById(k + "_" + i).innerText = jsn;
       }
