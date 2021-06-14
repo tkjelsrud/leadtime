@@ -5,6 +5,7 @@
 </head>
 
 <body onpaste="parsePased(event)">
+  <div id="error"></div>
   <table>
     <tr><th>ID</th><th>x</th><th>x</th><th>x</th></tr>
   </table>
@@ -12,14 +13,43 @@
 
 <script type="text/javascript">
 
+function showError(err) {
+  docment.getElementById("error").innerText = err;
+}
+  
 function parsePased(ev) {
   //console.log(ev);
-  console.log(ev.clipboardData.getData("text/plain"));
+  data = ev.clipboardData.getData("text/plain");
+  jsn  = jsonParse(data);
+  if(jsn) {
+    if(validJiraItem(jsn)) {
+      showError("JSON received ok!");
+    }
+    else {
+      showError("JSON received was not parsed as a valid jira item");
+    }
+  }
+  else {
+    showError("Value pasted was not parsed as valid JSON");
+  }
+  
   return false;
 }
   
-function validJiraItem(data) {
+function jsonParse(data) {
+  try {
+    jsn = JSON.parse(data);
+  } catch (e) {
+    return null;
+  }
+  return jsn;
+}
   
+function validJiraItem(jsn) {
+  if(!("fields" in jsn)) return false;
+  if(!("changelog" in jsn)) return false;
+  
+  return true;
 }
 </script>
 <script type="text/javascript">
