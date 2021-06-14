@@ -103,7 +103,7 @@ function updateTable() {
         // Its not json, just dump the text
         document.getElementById(k + "_" + i).innerText = jsn;
       }
-      else
+      else {
         let tree = JsonView.createTree(jsn);
         JsonView.render(tree, document.getElementById(k + "_" + i));
         JsonView.expandChildren(tree);
