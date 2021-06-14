@@ -94,7 +94,7 @@ function updateTable() {
     
     if(jsonParse(jsn)) {
       let tree = JsonView.createTree(jsn);
-      JsonView.render(tree, document.querySelector('#' + k));
+      JsonView.render(tree, d);
       //JsonView.render(tree, document.querySelector('#dataGrid'));
       JsonView.expandChildren(tree);
     }
