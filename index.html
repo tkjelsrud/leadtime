@@ -21,7 +21,7 @@
       background-color: #DDD;
     }
   </style>
-  <link rel="stylesheet" type="text/css" href="https://pgrabovets.github.io/json-view/jsonview.bundle.css"> 
+  <!--link rel="stylesheet" type="text/css" href="https://pgrabovets.github.io/json-view/jsonview.bundle.css"--> 
   <script type="text/javascript" src="https://pgrabovets.github.io/json-view/jsonview.bundle.js"></script>
 </head>
 
@@ -117,7 +117,7 @@ function updateTable() {
     
     var d = document.createElement("div");
     d.id = k + "_sc";
-    d.innerText = jiraSocialCount(xo);
+    d.innerText = JSON.stringify(jiraSocialCount(xo));
     document.getElementById("dataGrid").appendChild(d)
     
     
