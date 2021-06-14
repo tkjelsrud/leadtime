@@ -21,6 +21,7 @@
 
 
 <script type="text/javascript">
+var memory = {'items': {}};
 
 function showError(err) {
   document.getElementById("error").style.display = "block";
@@ -36,6 +37,8 @@ function parsePased(ev) {
   if(jsn) {
     if(validJiraItem(jsn)) {
       showError("JSON received ok!");
+      memory.items[jsn.key] = jsn;
+      storeJiraItem(jsn.key, jsn);
     }
     else {
       showError("JSON received was not parsed as a valid jira item");
@@ -62,6 +65,10 @@ function validJiraItem(jsn) {
   if(!("changelog" in jsn)) return false;
   
   return true;
+}
+  
+function storeJiraItem(jkey, jsn) {
+  localStorage.setItem(jkey, jsn);
 }
 </script>
 <script type="text/javascript">
