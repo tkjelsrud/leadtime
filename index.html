@@ -90,22 +90,20 @@ function updateTable() {
     for(var i = 0; i < qList.length; i++) {
       query = qList[i];
       jsn = eval(query);
-      console.log(jsn);
 
       // Add a new element to grid...
       var d = document.createElement("div");
       d.id = k + "_" + i;
       document.getElementById("dataGrid").appendChild(d)
 
-      if(jsonParse(jsn) != null) {
-        let tree = JsonView.createTree(jsn);
-        JsonView.render(tree, document.getElementById(k + "_" + i));
-        //JsonView.render(tree, document.querySelector('#dataGrid'));
-        JsonView.expandChildren(tree);
-      }
-      else {
+      if(jsn instanceof String) {
         // Its not json, just dump the text
         document.getElementById(k + "_" + i).innerText = jsn;
+      }
+      else
+        let tree = JsonView.createTree(jsn);
+        JsonView.render(tree, document.getElementById(k + "_" + i));
+        JsonView.expandChildren(tree);
       }
     }
   }
