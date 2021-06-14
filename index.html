@@ -3,8 +3,16 @@
   <style></style>
 </head>
 
-<body>
+<body onpaste="return getPastedValue(this);">
+ 
 
+
+ <script type="text/javascript">
+        function getPastedValue (obj) {
+            alert(obj.innerHTML);
+           return false;
+      }
+ </script>
 <script type="text/javascript">
 
 </script>
