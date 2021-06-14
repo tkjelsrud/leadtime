@@ -15,9 +15,7 @@
 
 <body onpaste="parsePased(event)">
   <div id="error" style="display:none">&nbsp;</div>
-  <table>
-    <tr><th>ID</th><th>x</th><th>x</th><th>x</th></tr>
-  </table>
+  <div id="dataGrid"></div>
 
 
 <script type="text/javascript">
@@ -39,6 +37,8 @@ function parsePased(ev) {
       showError("JSON received ok!");
       memory.items[jsn.key] = jsn;
       storeJiraItem(jsn.key, jsn);
+      
+      updateTable();
     }
     else {
       showError("JSON received was not parsed as a valid jira item");
@@ -69,6 +69,16 @@ function validJiraItem(jsn) {
   
 function storeJiraItem(jkey, jsn) {
   localStorage.setItem(jkey, JSON.stringify(jsn));
+}
+  
+function updateTable() {
+  // Read memory, insert lines
+  // Empty old rows
+  document.getElementById("dataGrid").innerHTML = "";
+  //document.getElementById("dataGrid").appendChild("<div id=\"root\"></div>");
+  const tree = JsonView.createTree(memory);
+  JsonView.render(tree, document.querySelector('#dataGrid'));
+  JsonView.expandChildren(tree);
 }
 </script>
 <script type="text/javascript">
