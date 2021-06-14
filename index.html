@@ -154,7 +154,7 @@ function updateTable() {
       // Add a new element to grid...
       var d = document.createElement("div");
       d.id = k + "_" + i;
-      document.getElementById("dataGrid").appendChild(d)
+      document.getElementById("dataGrid").appendChild(d);
 
       if(typeof jsn === 'string' || jsn instanceof String) {
         // Its not json, just dump the text
@@ -189,7 +189,7 @@ function jiraSocialCount(xo) {
   for(let j = 0; j < xo.fields.comment.comments.length; j++) {
     ppl[xo.fields.comment.comments[j].author.emailAddress] = 1;
   }
-  return ppl;
+  return Object.keys(ppl).length;
 }
   
 function jiraSubtaskCount(xo) {
