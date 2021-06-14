@@ -68,7 +68,7 @@ function validJiraItem(jsn) {
 }
   
 function storeJiraItem(jkey, jsn) {
-  localStorage.setItem(jkey, jsn);
+  localStorage.setItem(jkey, JSON.stringify(jsn));
 }
 </script>
 <script type="text/javascript">
