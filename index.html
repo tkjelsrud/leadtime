@@ -86,10 +86,20 @@ function updateTable() {
     i = memory.items[k];
     query = document.getElementById("dataFields").innerText;
     jsn = eval(query);
-    let tree = JsonView.createTree(jsn);
-    JsonView.render(tree, document.getElementById("dataGrid").appendChild("<div></div>"));
-    //JsonView.render(tree, document.querySelector('#dataGrid'));
-    JsonView.expandChildren(tree);
+    
+    // Add a new element to grid...
+    document.getElementById("dataGrid").appendChild("<div id=\"" + k + "\"></div>")
+    
+    if(jsonParse(jsn)) {
+      let tree = JsonView.createTree(jsn);
+      JsonView.render(tree, document.querySelector('#' + k));
+      //JsonView.render(tree, document.querySelector('#dataGrid'));
+      JsonView.expandChildren(tree);
+    }
+    else {
+      // Its not json, just dump the text
+      document.querySelector('#' + k).innerText = jsn;
+    }
   }
 }
 </script>
