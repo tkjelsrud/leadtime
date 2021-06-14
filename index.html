@@ -19,6 +19,7 @@
 
 <body onpaste="parsePased(event)">
   <div id="error" style="display:none">&nbsp;</div>
+  <div id="dataFields" contenteditable="true">i.key</div>
   <div id="dataGrid"></div>
 
 
@@ -80,9 +81,16 @@ function updateTable() {
   // Empty old rows
   document.getElementById("dataGrid").innerHTML = "";
   //document.getElementById("dataGrid").appendChild("<div id=\"root\"></div>");
-  const tree = JsonView.createTree(memory);
-  JsonView.render(tree, document.querySelector('#dataGrid'));
-  JsonView.expandChildren(tree);
+  
+  for(var k in target) {
+    i = memory.items[k];
+    query = document.getElementById("dataFields").innerText;
+    jsn = eval(query);
+    let tree = JsonView.createTree(jsn);
+    JsonView.render(tree, document.getElementById("dataGrid").appendChild("<div></div>"));
+    //JsonView.render(tree, document.querySelector('#dataGrid'));
+    JsonView.expandChildren(tree);
+  }
 }
 </script>
 <script type="text/javascript">
