@@ -82,7 +82,7 @@ function updateTable() {
   document.getElementById("dataGrid").innerHTML = "";
   //document.getElementById("dataGrid").appendChild("<div id=\"root\"></div>");
   
-  for(var k in target) {
+  for(var k in memory.items) {
     i = memory.items[k];
     query = document.getElementById("dataFields").innerText;
     jsn = eval(query);
