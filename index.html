@@ -1,9 +1,10 @@
 <html>
 <head>
   <style></style>
+  <script type="text/javascript" src="http://pgrabovets.github.io/json-view/jsonview.bundle.js"></script>
 </head>
 
-<body onpaste="return getPastedValue(this);">
+<body onpaste="parsePased()">
   <table>
     <tr><th>ID</th><th>x</th><th>x</th><th>x</th></tr>
   </table>
@@ -11,7 +12,7 @@
 
 <script type="text/javascript">
 // Does not really work... find code
-function getPastedValue (obj) {
+function parsePased(obj) {
   console.log(obj);
   return false;
 }
