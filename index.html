@@ -116,6 +116,18 @@ function updateTable() {
     }
   }
 }
+  
+function jiraSocialCount(xo) {
+  // Custom function to count (unique) people involved
+  let ppl = {};
+  ppl[xo.fields.assignee.emailAddress] = 1;
+  ppl[xo.fields.creator.emailAddress] = 1;
+  ppl[xo.fields.reporter.emailAddress] = 1;
+  for(let j = 0; j < xo.fields.comment.comments.length; j++) {
+    ppl[xo.fields.comment.comments[j].author.emailAddress] = 1;
+  }
+  return ppl;
+}
 </script>
 <script type="text/javascript">
 
