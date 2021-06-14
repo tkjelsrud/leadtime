@@ -4,7 +4,7 @@
   <script type="text/javascript" src="http://pgrabovets.github.io/json-view/jsonview.bundle.js"></script>
 </head>
 
-<body onpaste="parsePased()">
+<body onpaste="parsePased(event)">
   <table>
     <tr><th>ID</th><th>x</th><th>x</th><th>x</th></tr>
   </table>
@@ -12,8 +12,8 @@
 
 <script type="text/javascript">
 // Does not really work... find code
-function parsePased(obj) {
-  console.log(obj);
+function parsePased(ev) {
+  console.log(ev);
   return false;
 }
 </script>
