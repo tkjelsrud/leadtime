@@ -147,6 +147,14 @@ function updateTable() {
   for(var k in memory.items) {
     var xo = memory.items[k];
     
+    // First, set key
+    var d = document.createElement("div");
+    d.id = k + "_" + i;
+    d.style.clear = "both";
+    d.innerText = xo.key;
+    document.getElementById("dataGrid").appendChild(d);
+    
+    
     for(var i = 0; i < qList.length; i++) {
       query = qList[i];
       jsn = eval(query);
