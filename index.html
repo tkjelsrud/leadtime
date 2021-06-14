@@ -93,18 +93,18 @@ function updateTable() {
 
       // Add a new element to grid...
       var d = document.createElement("div");
-      d.id = k;
+      d.id = k + "_" + i;
       document.getElementById("dataGrid").appendChild(d)
 
       if(jsonParse(jsn) != null) {
         let tree = JsonView.createTree(jsn);
-        JsonView.render(tree, document.getElementById(k));
+        JsonView.render(tree, document.getElementById(k + "_" + i));
         //JsonView.render(tree, document.querySelector('#dataGrid'));
         JsonView.expandChildren(tree);
       }
       else {
         // Its not json, just dump the text
-        document.getElementById(k).innerText = jsn;
+        document.getElementById(k + "_" + i).innerText = jsn;
       }
     }
   }
