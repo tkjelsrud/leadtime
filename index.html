@@ -88,7 +88,8 @@ function updateTable() {
     jsn = eval(query);
     
     // Add a new element to grid...
-    var d = document.createElement("<div id=\"" + k + "\"></div>");   
+    var d = document.createElement("div");
+    d.id = k;
     document.getElementById("dataGrid").appendChild(d)
     
     if(jsonParse(jsn)) {
