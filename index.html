@@ -114,6 +114,13 @@ function updateTable() {
         JsonView.expandChildren(tree);
       }
     }
+    
+    var d = document.createElement("div");
+    d.id = k + "_sc";
+    d.innerText = jiraSocialCount(xo);
+    document.getElementById("dataGrid").appendChild(d)
+    
+    
   }
 }
   
