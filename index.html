@@ -92,7 +92,7 @@ function updateTable() {
     d.id = k;
     document.getElementById("dataGrid").appendChild(d)
     
-    if(jsonParse(jsn)) {
+    if(jsonParse(jsn) != null) {
       let tree = JsonView.createTree(jsn);
       JsonView.render(tree, document.getElementById(k));
       //JsonView.render(tree, document.querySelector('#dataGrid'));
