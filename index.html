@@ -22,10 +22,10 @@
 <script type="text/javascript">
 
 function showError(err) {
-  document.getElementById("error").display = "block";
+  document.getElementById("error").style.display = "block";
   document.getElementById("error").innerText = err;
   
-  //setTimeout(function() {document.getElementById("error").display = "none";}, 3000);
+  setTimeout(function() {document.getElementById("error").style.display = "none";}, 3000);
 }
   
 function parsePased(ev) {
