@@ -17,6 +17,10 @@
       width: 200px;
       overflow-wrap: break-word;
     }
+    .comp {
+      width: 80px;
+      overflow-wrap: break-word;
+    }
   	#error {
       color: red; 
       background-color: #DDD;
@@ -152,6 +156,7 @@ function updateTable() {
     d.id = k + "_";
     d.style.clear = "both";
     d.innerText = xo.key;
+    d.className = "comp";
     document.getElementById("dataGrid").appendChild(d);
     
     
