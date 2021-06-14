@@ -171,6 +171,10 @@ function updateTable() {
     d.innerText = JSON.stringify(jiraSocialCount(xo));
     document.getElementById("dataGrid").appendChild(d)
     
+    var d = document.createElement("div");
+    d.id = k + "_st";
+    d.innerText = jiraSubtaskCount(xo);
+    document.getElementById("dataGrid").appendChild(d)
     
   }
 }
@@ -185,6 +189,10 @@ function jiraSocialCount(xo) {
     ppl[xo.fields.comment.comments[j].author.emailAddress] = 1;
   }
   return ppl;
+}
+  
+function jiraSubtaskCount(xo) {
+  return xo.fields.subtasks.length;
 }
 </script>
 <script type="text/javascript">
