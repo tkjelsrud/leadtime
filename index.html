@@ -167,14 +167,25 @@ function updateTable() {
   // Read memory, insert lines
   // Empty old rows
   document.getElementById("dataGrid").innerHTML = "";
-  //document.getElementById("dataGrid").appendChild("<div id=\"root\"></div>");
-  //query = document.getElementById("dataFields").innerText;
-  //qList = query.split(",");
   let table = document.createElement("table");
   
   generateTableHead(table, config.columns);
   
   document.getElementById("dataGrid").appendChild(table);
+  
+  for(let k in memory.items) {
+    let xo = memory.items[k];
+    
+    // Calculate row values (jira item)
+    let rowData = new Array();
+    for(let i = 0; i < config.columns.length; i++) {
+      val = eval(config.column[i].eval);
+      rowData.push(val);
+    }
+    
+    // Generate table row
+    generateTableRow(rowData, config.columns);
+  }
   
   /*for(let k in memory.items) {
     var xo = memory.items[k];
@@ -233,6 +244,15 @@ function generateTableHead(table, columns) {
     th.appendChild(text);
     row.appendChild(th);
   }
+}
+  
+function generateTableRow(table, rowData, columns) {
+  let row = table.insertRow();
+  /*for (key in element) {
+    let cell = row.insertCell();
+    let text = document.createTextNode(element[key]);
+    cell.appendChild(text);
+  }*/
 }
   
 function jiraSocialCount(xo) {
