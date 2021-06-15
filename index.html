@@ -179,7 +179,7 @@ function updateTable() {
     // Calculate row values (jira item)
     let rowData = new Array();
     for(let i = 0; i < config.columns.length; i++) {
-      val = eval(config.column[i].eval);
+      val = eval(config.columns[i].eval);
       rowData.push(val);
     }
     
