@@ -158,6 +158,7 @@ function loadStore() {
     if(jsn) {
       if(validJiraItem(jsn)) {
         memory.items[jsn.key] = jsn;
+        showError("Loaded " + jsn.key);
       }
     }
   }
