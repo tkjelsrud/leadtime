@@ -152,8 +152,8 @@ function loadStore() {
   
   ind = ind.split(";");
   
-  for(let k in ind) {
-    let data = localStorage.getItem(k);
+  for(let i = 0; i < ind.length; i++) {
+    let data = localStorage.getItem(ind[i]);
     let jsn  = jsonParse(data);
     if(jsn) {
       if(validJiraItem(jsn)) {
