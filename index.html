@@ -311,6 +311,16 @@ function jiraHistory(xo) {
   return res;
 }
   
+function jiraLeadtime(xo) {
+  // Assess if actually done
+  let cd = new Date(xo.fields.created);
+  let rd = new Date();
+  if(xo.fields.resolutiondate)
+    rd = new Date(xo.fields.resolutiondate);
+
+  return Math.floor((rd - cd) / (1000*60*60*24));
+}
+  
 function shortDate(dateStr) {
  return (new Date(dateStr)).toLocaleDateString('no-nb'); 
 }
