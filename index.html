@@ -248,6 +248,11 @@ function generateTableHead(table, columns) {
   
 function generateTableRow(table, rowData, columns) {
   let row = table.insertRow();
+  for(let i = 0; i < rowData.length; i++) {
+    let cell = row.insertCell();
+    let cval = document.createTextNode(rowData[i]);
+    cell.appendChild(cval);
+  }
   /*for (key in element) {
     let cell = row.insertCell();
     let text = document.createTextNode(element[key]);
