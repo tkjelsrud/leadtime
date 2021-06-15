@@ -305,7 +305,7 @@ function jiraHistory(xo) {
       if(it.field == "resolution")
         res += shortDate(hi.created) + " reso:" + it.toString + " ";
       if(it.field == "status")
-        res += shortDate(hi.created) + " stat:" + it.fromString + " -> " + it.toString + " ";
+        res += shortDate(hi.created) + " stat:" + it.fromString + "->" + it.toString + " ";
     }
   }
   return res;
