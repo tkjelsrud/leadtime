@@ -106,6 +106,7 @@ function parsePased(ev) {
       showError("JSON received ok!");
       memory.items[jsn.key] = jsn;
       storeJiraItem(jsn.key, jsn);
+      storeItemIndex();
       
       updateTable();
     }
