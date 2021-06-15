@@ -230,7 +230,7 @@ function jiraSocialCount(xo) {
 }
   
 function jiraSubtaskCount(xo) {
-  return xo.fields.subtasks.length;
+  return {'value': xo.fields.subtasks.length, 'detail': ""};
 }
   
 document.addEventListener("DOMContentLoaded", function(event) {
