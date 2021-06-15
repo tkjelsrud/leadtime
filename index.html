@@ -294,6 +294,22 @@ function jiraSubtaskCount(xo) {
   return "" + xo.fields.subtasks.length;
 }
   
+function jiraHistory(xo) {
+  let res = "";
+  for(let i = 0; i < xo.changelog.histories.length; i++) {
+    let hi = xo.changelog.histories[i];
+    res += hi.created + " ";
+    for(let j = 0; j < hi.items.length; j++) {
+      let it = hi.items[j];
+      if(it.field == "resolution")
+        res += " reso:" + it.toString;
+      if(it.field == "status")
+        res += " stat:" + it.fromString + " -> " + it.toString;
+    }
+  }
+  return res;
+}
+  
 document.addEventListener("DOMContentLoaded", function(event) {
   loadStore();
   updateTable();
