@@ -207,11 +207,13 @@ function updateTable() {
     var d = document.createElement("div");
     d.id = k + "_sc";
     d.innerText = JSON.stringify(jiraSocialCount(xo).value);
+    d.title = jiraSocialCount(xo).detail;
     document.getElementById("dataGrid").appendChild(d)
     
     var d = document.createElement("div");
     d.id = k + "_st";
     d.innerText = jiraSubtaskCount(xo).value;
+    d.title = jiraSubtaskCount(xo).detail
     document.getElementById("dataGrid").appendChild(d)
     
   }
