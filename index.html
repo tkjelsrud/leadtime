@@ -7,19 +7,8 @@
     }
     #dataGrid {
       /*font-size: 9px !important;*/
-      float: left;
-      width: 800px;
       background-color: #EEE;
       padding: 4px;
-    }
-    #dataGrid div {
-      float: left;
-      width: 200px;
-      overflow-wrap: break-word;
-    }
-    #dataGrid div.comp {
-      width: 80px;
-      overflow-wrap: break-word;
     }
   	#error {
       color: red; 
@@ -83,12 +72,22 @@
 
 <body onpaste="parsePased(event)">
   <div id="error" style="display:none">&nbsp;</div>
-  <div id="dataFields" contenteditable="true">xo.fields.issuetype.name,xo.fields</div>
   <div id="dataGrid"></div>
 
 
 <script type="text/javascript">
 var memory = {'items': {}};
+
+// Table configuration (keep as dynamic as possible)
+var config = {
+  'filters': [],
+  'columns': [
+    {'title': "Key", 'eval': "xo.key", 'class': 'narrow'},
+    {'title': "Title", 'eval': "xo.fields.summary"},
+    {'title': "Type", 'eval': "xo.fields.issuetype.name"}
+  ]
+};
+  
 
 function showError(err) {
   document.getElementById("error").style.display = "block";
@@ -169,10 +168,15 @@ function updateTable() {
   // Empty old rows
   document.getElementById("dataGrid").innerHTML = "";
   //document.getElementById("dataGrid").appendChild("<div id=\"root\"></div>");
-  query = document.getElementById("dataFields").innerText;
-  qList = query.split(",");
+  //query = document.getElementById("dataFields").innerText;
+  //qList = query.split(",");
+  let table = document.createElement("table");
   
-  for(let k in memory.items) {
+  generateTableHead(table, config.columns);
+  
+  document.getElementById("dataGrid").appendChild(table);
+  
+  /*for(let k in memory.items) {
     var xo = memory.items[k];
     
     // First, set key
@@ -182,7 +186,6 @@ function updateTable() {
     d.innerText = xo.key;
     d.className = "comp";
     document.getElementById("dataGrid").appendChild(d);
-    
     
     for(let i = 0; i < qList.length; i++) {
       query = qList[i];
@@ -216,6 +219,19 @@ function updateTable() {
     d.title = jiraSubtaskCount(xo).detail
     document.getElementById("dataGrid").appendChild(d)
     
+  }*/
+}
+  
+function generateTableHead(table, columns) {
+  let thead = table.createTHead();
+  let row = thead.insertRow();
+  for(let i = 0; i < columns.length; i++) {
+    let th = document.createElement("th");
+    if('class' in columns[i])
+    	th.className = columns[i].class;
+    let text = document.createTextNode(columns[i].title);
+    th.appendChild(text);
+    row.appendChild(th);
   }
 }
   
