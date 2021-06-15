@@ -307,7 +307,7 @@ function jiraHistory(xo) {
       if(it.field == "status")
         res += " stat:" + it.fromString + " -> " + it.toString;
     }
-    res += "<br/>";
+    res += "\n";
   }
   return res;
 }
