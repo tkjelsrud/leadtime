@@ -97,7 +97,8 @@ var config = {
   'columns': [
     {'title': "Key", 'eval': "xo.key", 'class': 'narrow'},
     {'title': "Title", 'eval': "xo.fields.summary"},
-    {'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'}
+    {'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'},
+    {'title': "Labels", 'eval': "xo.fields.labels.join(',')"}
   ]
 };
   
