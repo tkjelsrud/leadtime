@@ -299,13 +299,13 @@ function jiraHistory(xo) {
   let res = "";
   for(let i = 0; i < xo.changelog.histories.length; i++) {
     let hi = xo.changelog.histories[i];
-    res += shortDate(hi.created) + " ";
+    
     for(let j = 0; j < hi.items.length; j++) {
       let it = hi.items[j];
       if(it.field == "resolution")
-        res += shortDate(hi.created) + " reso:" + it.toString;
+        res += shortDate(hi.created) + " reso:" + it.toString + "<br\>";
       if(it.field == "status")
-        res += shortDate(hi.created) + " stat:" + it.fromString + " -> " + it.toString;
+        res += shortDate(hi.created) + " stat:" + it.fromString + " -> " + it.toString + "<br\>";
     }
   }
   return res;
