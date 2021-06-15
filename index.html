@@ -205,7 +205,7 @@ function updateTable() {
       	val = eval(config.columns[i].eval);
       }
       catch(err) {
-        showError(err);
+        showError(config.columns[i].title + " ERROR " + err);
       }
       rowData.push(val);
     }
