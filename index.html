@@ -146,7 +146,11 @@ function storeItemIndex() {
 }
 
 function loadStore() {
-  let ind = localStorage.getItem("items").split(";");
+  let ind = localStorage.getItem("items");
+  if(!ind)
+    return false;
+  
+  ind = ind.split(";");
   
   for(let k in ind) {
     let data = localStorage.getItem(k);
