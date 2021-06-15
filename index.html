@@ -140,6 +140,24 @@ function storeJiraItem(jkey, jsn) {
   localStorage.setItem(jkey, JSON.stringify(jsn));
 }
   
+function storeItemIndex() {
+  localStorage.setItem("items", Object.keys(memory.items).join(";"));
+}
+
+function loadStore() {
+  let ind = localStorage.getItem("items").split(";");
+  
+  for(let k in ind) {
+    let data = localStorage.getItem(k);
+    let jsn  = jsonParse(data);
+    if(jsn) {
+      if(validJiraItem(jsn)) {
+        memory.items[jsn.key] = jsn;
+      }
+    }
+  }
+}
+  
 function updateTable() {
   // Read memory, insert lines
   // Empty old rows
@@ -148,7 +166,7 @@ function updateTable() {
   query = document.getElementById("dataFields").innerText;
   qList = query.split(",");
   
-  for(var k in memory.items) {
+  for(let k in memory.items) {
     var xo = memory.items[k];
     
     // First, set key
