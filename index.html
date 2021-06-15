@@ -226,6 +226,11 @@ function jiraSocialCount(xo) {
 function jiraSubtaskCount(xo) {
   return xo.fields.subtasks.length;
 }
+  
+(function() {
+  loadStore();
+  updateTable();
+})();
 </script>
 <script type="text/javascript">
 
