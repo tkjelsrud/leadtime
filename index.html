@@ -98,6 +98,7 @@ var config = {
     {'title': "Key", 'eval': "xo.key", 'class': 'narrow'},
     {'title': "Title", 'eval': "xo.fields.summary"},
     {'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'},
+    {'title': "Status", 'eval': "xo.fields.status.name", 'class': 'narrow'},
     {'title': "Labels", 'eval': "xo.fields.labels.join(',')"},
     {'title': "Data", 'eval': "xo.fields.description.length + ' ' + xo.fields.attachment.length + 'A'", 'class': 'narrow'},
     {'title': "Social", 'eval': "jiraSocialCount(xo)", 'class': 'narrow'}
