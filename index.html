@@ -305,9 +305,9 @@ function jiraHistory(xo) {
     for(let j = 0; j < hi.items.length; j++) {
       let it = hi.items[j];
       if(it.field == "resolution")
-        res += shortDate(hi.created) + " reso:" + it.toString + " ";
+        res += shortDate(hi.created) + " reso->" + it.toString + " ";
       if(it.field == "status")
-        res += shortDate(hi.created) + " stat:" + it.fromString + "->" + it.toString + " ";
+        res += shortDate(hi.created) + " stat->" + it.toString + " "; //it.fromString 
     }
   }
   return res;
@@ -324,7 +324,7 @@ function jiraLeadtime(xo) {
 }
   
 function shortDate(dateStr) {
- return (new Date(dateStr)).toLocaleDateString('no-nb'); 
+  return (new Date(dateStr)).toLocaleDateString('no-nb'); 
 }
   
 document.addEventListener("DOMContentLoaded", function(event) {
