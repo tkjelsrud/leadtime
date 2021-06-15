@@ -108,6 +108,7 @@ function showError(err) {
   document.getElementById("error").style.display = "block";
   document.getElementById("error").innerText = err;
   
+  //TODO: Handle many messages without beeing hidden too early or messages overwritten
   setTimeout(function() {document.getElementById("error").style.display = "none";}, 3000);
 }
   
@@ -284,11 +285,11 @@ function jiraSocialCount(xo) {
   for(let j = 0; j < xo.fields.comment.comments.length; j++) {
     ppl[xo.fields.comment.comments[j].author.emailAddress] = 1;
   }
-  return {'value': Object.keys(ppl).length, 'detail': Object.keys(ppl).join(";")};
+  return "ppl:" + Object.keys(ppl).length + " cmt:" + xo.fields.comment.total;
 }
   
 function jiraSubtaskCount(xo) {
-  return {'value': xo.fields.subtasks.length, 'detail': ""};
+  return "" + xo.fields.subtasks.length;
 }
   
 document.addEventListener("DOMContentLoaded", function(event) {
