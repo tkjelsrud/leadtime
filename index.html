@@ -112,7 +112,7 @@ var config = {
 
 function showError(err) {
   document.getElementById("error").style.display = "block";
-  document.getElementById("error").innerText = err;
+  document.getElementById("error").innerText = err + document.getElementById("error").innerText;
   
   //TODO: Handle many messages without beeing hidden too early or messages overwritten
   setTimeout(function() {document.getElementById("error").style.display = "none";}, 3000);
