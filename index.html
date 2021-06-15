@@ -109,7 +109,6 @@ var config = {
     {'title': "ELinks", 'eval': "jiraEpicLinks(xo)"}
   ]
 };
-  
 
 function showError(err) {
   document.getElementById("error").style.display = "block";
@@ -301,6 +300,8 @@ function jiraSubtaskCount(xo) {
   
 function jiraHistory(xo) {
   let res = "";
+  if(!xo.changelog || !("histories" in xo.changelog))
+    return res;
   // TODO: generated too much string data, right now just rememers last line
   //
   for(let i = 0; i < xo.changelog.histories.length; i++) {
@@ -319,6 +320,9 @@ function jiraHistory(xo) {
   
 function jiraEpicLinks(xo) {
   let res = "";
+  if(!xo.changelog || !("histories" in xo.changelog))
+    return res;
+    
   for(let i = 0; i < xo.changelog.histories.length; i++) {
     let hi = xo.changelog.histories[i];
     
