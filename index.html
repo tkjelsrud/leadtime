@@ -226,7 +226,7 @@ function jiraSocialCount(xo) {
   for(let j = 0; j < xo.fields.comment.comments.length; j++) {
     ppl[xo.fields.comment.comments[j].author.emailAddress] = 1;
   }
-  return Object.keys(ppl).length;
+  return {'value': Object.keys(ppl).length, 'detail': Object.keys(ppl).join(";")};
 }
   
 function jiraSubtaskCount(xo) {
