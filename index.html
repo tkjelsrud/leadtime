@@ -303,11 +303,10 @@ function jiraHistory(xo) {
     for(let j = 0; j < hi.items.length; j++) {
       let it = hi.items[j];
       if(it.field == "resolution")
-        res += " reso:" + it.toString;
+        res += shortDate(hi.created) + " reso:" + it.toString;
       if(it.field == "status")
-        res += " stat:" + it.fromString + " -> " + it.toString;
+        res += shortDate(hi.created) + " stat:" + it.fromString + " -> " + it.toString;
     }
-    res += "\n";
   }
   return res;
 }
