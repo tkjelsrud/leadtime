@@ -299,15 +299,17 @@ function jiraSubtaskCount(xo) {
   
 function jiraHistory(xo) {
   let res = "";
+  // TODO: generated too much data, right now just rememers last line
+  //
   for(let i = 0; i < xo.changelog.histories.length; i++) {
     let hi = xo.changelog.histories[i];
     
     for(let j = 0; j < hi.items.length; j++) {
       let it = hi.items[j];
       if(it.field == "resolution")
-        res += shortDate(hi.created) + " reso->" + it.toString + " ";
+        res = shortDate(hi.created) + " reso->" + it.toString + " ";
       if(it.field == "status")
-        res += shortDate(hi.created) + " stat->" + it.toString + " "; //it.fromString 
+        res = shortDate(hi.created) + " " + it.fromString + "->" + it.toString + " "; //it.fromString 
     }
   }
   return res;
