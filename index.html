@@ -315,6 +315,20 @@ function jiraHistory(xo) {
   return res;
 }
   
+function jiraEpicLinks(xo) {
+  let res = "";
+  for(let i = 0; i < xo.changelog.histories.length; i++) {
+    let hi = xo.changelog.histories[i];
+    
+    for(let j = 0; j < hi.items.length; j++) {
+      let it = hi.items[j];
+      if(it.field == "Epic Child")
+        res += it.toString + " ";
+    }
+  }
+  return res;
+}
+  
 function jiraLeadtime(xo) {
   // Assess if actually done
   let cd = new Date(xo.fields.created);
