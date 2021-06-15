@@ -232,10 +232,10 @@ function jiraSubtaskCount(xo) {
   return xo.fields.subtasks.length;
 }
   
-(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
   loadStore();
   updateTable();
-})();
+});
 </script>
 <script type="text/javascript">
 
