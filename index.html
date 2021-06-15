@@ -206,12 +206,12 @@ function updateTable() {
     
     var d = document.createElement("div");
     d.id = k + "_sc";
-    d.innerText = JSON.stringify(jiraSocialCount(xo));
+    d.innerText = JSON.stringify(jiraSocialCount(xo).value);
     document.getElementById("dataGrid").appendChild(d)
     
     var d = document.createElement("div");
     d.id = k + "_st";
-    d.innerText = jiraSubtaskCount(xo);
+    d.innerText = jiraSubtaskCount(xo).value;
     document.getElementById("dataGrid").appendChild(d)
     
   }
