@@ -365,8 +365,13 @@ function jiraTechFamilies(xo) {
 
 function jiraEpicLeadtime(xo) {
   //Value Definition: 8d, Explore solutions: 32d, Specify How: 143d, Development Lifecycle: 7d, Done: 2 
+  let res = new Array();
   let arr = xo.fields.customfield_12415.split(',');
-  
+  for(let i = 0; i < arr.length; i++) {
+    let ph = arr[i].split(':');
+    res.push(ph[0].trim().substr(0,1) + ":" + parseInt(ph[1]);
+  }
+  return res.join(',');
 }
   
 function shortDate(dateStr) {
