@@ -100,7 +100,7 @@ var config = {
     {'title': "Key", 'eval': "xo.key", 'class': 'narrow'},
     {'title': "Title", 'eval': "xo.fields.summary"},
     {'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'},
-    {'title': "TFam", 'eval': "xo.fields.customfield_13515[0].value", 'class': 'narrow'},
+    {'title': "TFam", 'eval': "jiraTechFamilies(xo)", 'class': 'narrow'},
     {'title': "Status", 'eval': "xo.fields.status.name", 'class': 'narrow'},
     {'title': "Assignee", 'eval': "xo.fields.assignee.emailAddress", 'class': 'narrow'},
     {'title': "Labels", 'eval': "xo.fields.labels.join(' ')"},
@@ -351,6 +351,16 @@ function jiraLeadtime(xo) {
     rd = new Date(xo.fields.resolutiondate);
 
   return Math.floor((rd - cd) / (1000*60*60*24)) + "d";
+}
+  
+function jiraTechFamilies(xo) {
+  // Assess if actually done
+  let res = new Array();
+  for(let i = 0; i < xo.fields.customfield_13515.length; i++) {
+    res.push(xo.fields.customfield_13515[i].value);
+  }
+  
+  return res.join(",");
 }
   
 function shortDate(dateStr) {
