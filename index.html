@@ -363,6 +363,12 @@ function jiraTechFamilies(xo) {
   
   return res.join(",");
 }
+
+function jiraEpicLeadtime(xo) {
+  //Value Definition: 8d, Explore solutions: 32d, Specify How: 143d, Development Lifecycle: 7d, Done: 2 
+  let arr = xo.fields.customfield_12415.split(',');
+  
+}
   
 function shortDate(dateStr) {
   return (new Date(dateStr)).toLocaleDateString('no-nb'); 
