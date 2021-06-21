@@ -369,7 +369,7 @@ function jiraEpicLeadtime(xo) {
   let arr = xo.fields.customfield_12415.split(',');
   for(let i = 0; i < arr.length; i++) {
     let ph = arr[i].split(':');
-    res.push(ph[0].trim().substr(0,1) + ":" + parseInt(ph[1]);
+    res.push(ph[0].trim().substr(0,1) + ":" + parseInt(ph[1]));
   }
   return res.join(',');
 }
