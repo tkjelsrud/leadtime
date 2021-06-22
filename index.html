@@ -216,51 +216,6 @@ function updateTable() {
     // Generate table row
     generateTableRow(table, rowData, config.columns);
   }
-  
-  /*for(let k in memory.items) {
-    var xo = memory.items[k];
-    
-    // First, set key
-    var d = document.createElement("div");
-    d.id = k + "_";
-    d.style.clear = "both";
-    d.innerText = xo.key;
-    d.className = "comp";
-    document.getElementById("dataGrid").appendChild(d);
-    
-    for(let i = 0; i < qList.length; i++) {
-      query = qList[i];
-      jsn = eval(query);
-
-      // Add a new element to grid...
-      var d = document.createElement("div");
-      d.id = k + "_" + i;
-      document.getElementById("dataGrid").appendChild(d);
-
-      if(typeof jsn === 'string' || jsn instanceof String) {
-        // Its not json, just dump the text
-        document.getElementById(k + "_" + i).innerText = jsn;
-      }
-      else {
-        let tree = JsonView.createTree(jsn);
-        JsonView.render(tree, document.getElementById(k + "_" + i));
-        JsonView.expandChildren(tree);
-      }
-    }
-    
-    var d = document.createElement("div");
-    d.id = k + "_sc";
-    d.innerText = JSON.stringify(jiraSocialCount(xo).value);
-    d.title = jiraSocialCount(xo).detail;
-    document.getElementById("dataGrid").appendChild(d)
-    
-    var d = document.createElement("div");
-    d.id = k + "_st";
-    d.innerText = jiraSubtaskCount(xo).value;
-    d.title = jiraSubtaskCount(xo).detail
-    document.getElementById("dataGrid").appendChild(d)
-    
-  }*/
 }
   
 function generateTableHead(table, columns) {
@@ -281,13 +236,10 @@ function generateTableRow(table, rowData, columns) {
   for(let i = 0; i < rowData.length; i++) {
     let cell = row.insertCell();
     let cval = document.createTextNode(rowData[i]);
+    //let cval = document.createElement('div');
+    //cval.innerHTML = 
     cell.appendChild(cval);
   }
-  /*for (key in element) {
-    let cell = row.insertCell();
-    let text = document.createTextNode(element[key]);
-    cell.appendChild(text);
-  }*/
 }
   
 function jiraSocialCount(xo) {
