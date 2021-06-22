@@ -29,6 +29,9 @@
     .narrow {
       width: 80px;
     }
+    .narrownum {
+      width: 30px; 
+    }
   </style>
   <style>
     .json-container {
@@ -108,7 +111,8 @@ var config = {
     {'title': "Social", 'eval': "jiraSocialCount(xo)", 'class': 'narrow'},
     {'title': "History", 'eval': "jiraHistory(xo)"},
     {'title': "Leadtime", 'eval': "jiraLeadtime(xo)", 'class': "narrow"},
-    {'title': "LTime", 'eval': "jiraEpicLeadtime(xo)"},
+    {'title': "LT VD", 'eval': "jiraEpicLeadtime(xo, 'Value Definition')", 'class': "narrownum"},
+    {'title': "LT ES", 'eval': "jiraEpicLeadtime(xo, 'Explore Solution')", 'class': "narrownum"},
     {'title': "ELinks", 'eval': "jiraEpicLinks(xo)"}
   ]
 };
@@ -213,7 +217,6 @@ function updateTable() {
       rowData.push(val);
     }
     
-    // Generate table row
     generateTableRow(table, rowData, config.columns);
   }
 }
