@@ -326,8 +326,11 @@ function jiraEpicLeadtime(xo, filter) {
   let arr = xo.fields.customfield_12415.split(',');
   for(let i = 0; i < arr.length; i++) {
     let ph = arr[i].split(':');
-    if(ph[0].trim() == filter)
-      return "" + parseInt(ph[1]);
+    if(ph[0].trim() == filter) {
+	  let found = paragraph.match(/([0-9])+d/);
+      if(found[1])
+        return found[1];
+    }
   }
   return "";
 }
