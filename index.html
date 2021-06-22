@@ -112,8 +112,8 @@ var config = {
     {'title': "History", 'eval': "jiraHistory(xo)"},
     {'title': "Leadtime", 'eval': "jiraLeadtime(xo)", 'class': "narrow"},
     {'title': "LT VD", 'eval': "jiraEpicLeadtime(xo, 'Value Definition')", 'class': "narrownum"},
-    {'title': "LT ES", 'eval': "jiraEpicLeadtime(xo, 'Explore Solution')", 'class': "narrownum"},
-    {'title': "LT SH", 'eval': "jiraEpicLeadtime(xo, 'Spesify How')", 'class': "narrownum"},
+    {'title': "LT ES", 'eval': "jiraEpicLeadtime(xo, 'Explore solutions')", 'class': "narrownum"},
+    {'title': "LT SH", 'eval': "jiraEpicLeadtime(xo, 'Specify How')", 'class': "narrownum"},
     {'title': "LT DL", 'eval': "jiraEpicLeadtime(xo, 'Development Lifecycle')", 'class': "narrownum"},
     {'title': "ELinks", 'eval': "jiraEpicLinks(xo)"}
   ]
@@ -321,6 +321,7 @@ function jiraTechFamilies(xo) {
 }
 
 function jiraEpicLeadtime(xo, filter) {
+  //Value Definition: 8d, Explore solutions: 32d, Specify How: 143d, Development Lifecycle: 7d, Done: 2 
   let res = new Array();
   let arr = xo.fields.customfield_12415.split(',');
   for(let i = 0; i < arr.length; i++) {
