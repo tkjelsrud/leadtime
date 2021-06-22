@@ -328,10 +328,10 @@ function jiraEpicLeadtime(xo, filter) {
   for(let i = 0; i < arr.length; i++) {
     let ph = arr[i].split(':');
     if(ph[0].trim() == filter) {
-      console.log(ph[0] + " -> " + ph[1]);
+      //console.log(ph[0] + " -> " + ph[1]);
 	  let found = ph[1].match(/([0-9]+)d/);
       if(found[1]) {
-        console.log("Match -> " + found[1] + " found " + found);
+        //console.log("Match -> " + found[1] + " found " + found);
         return found[1];
         
       }
