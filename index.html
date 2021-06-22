@@ -220,14 +220,16 @@ function updateTable() {
       }
       rowData.push(val);
       
-      if(config.columns[i].sum && val != "") {
+      // Maybe average is not that useful, either way
+      //
+      /*if(config.columns[i].sum && val != "") {
         if(config.columns[i].title in sum) {
           sum[config.columns[i].title] += parseInt(val);
         }
         else {
           sum[config.columns[i].title] = parseInt(val);
         }
-      }
+      }*/
     }
     
     generateTableRow(table, rowData, config.columns);
