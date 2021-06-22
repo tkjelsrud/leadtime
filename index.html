@@ -321,7 +321,6 @@ function jiraTechFamilies(xo) {
 }
 
 function jiraEpicLeadtime(xo, filter) {
-  //Value Definition: 8d, Explore solutions: 32d, Specify How: 143d, Development Lifecycle: 7d, Done: 2 
   let res = new Array();
   let arr = xo.fields.customfield_12415.split(',');
   for(let i = 0; i < arr.length; i++) {
