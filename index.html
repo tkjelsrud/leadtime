@@ -199,6 +199,7 @@ function updateTable() {
   // Empty old rows
   document.getElementById("dataGrid").innerHTML = "";
   let table = document.createElement("table");
+  let sum = {};
   
   generateTableHead(table, config.columns);
   
@@ -218,6 +219,15 @@ function updateTable() {
         showError(config.columns[i].title + " ERROR " + err);
       }
       rowData.push(val);
+      
+      if(config.columns[i].sum && val != "") {
+        if(config.columns[i].title in sum) {
+          sum[config.columns[i].title] += parseInt(val);
+        }
+        else {
+          sum[config.columns[i].title] = parseInt(val);
+        }
+      }
     }
     
     generateTableRow(table, rowData, config.columns);
