@@ -114,7 +114,7 @@ var config = {
     {'title': "LT VD", 'eval': "jiraEpicLeadtime(xo, 'Value Definition')", 'class': "narrownum", 'sum': true},
     {'title': "LT ES", 'eval': "jiraEpicLeadtime(xo, 'Explore solutions')", 'class': "narrownum", 'sum': true},
     {'title': "LT SH", 'eval': "jiraEpicLeadtime(xo, 'Specify How')", 'class': "narrownum", 'sum': true},
-    {'title': "LT DL", 'eval': "jiraEpicLeadtime(xo, 'Development Lifecycle')", 'class': "narrownum", 'sum': true},
+    {'title': "LT DL", 'eval': "jiraEpicLeadtime(xo, 'Development Lifecycle')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "ELinks", 'eval': "jiraEpicLinks(xo)"}
   ]
 };
@@ -256,6 +256,12 @@ function generateTableRow(table, rowData, columns) {
   for(let i = 0; i < rowData.length; i++) {
     let cell = row.insertCell();
     let cval = document.createTextNode(rowData[i]);
+    if('style' in columns[i]) {
+      if(columns[i].style == "dayScale") {
+        cval.style.backgrounColor = "#ff0000";
+       	cval.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
+      }
+    }
     //let cval = document.createElement('div');
     //cval.innerHTML = 
     cell.appendChild(cval);
