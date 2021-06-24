@@ -259,7 +259,7 @@ function generateTableRow(table, rowData, columns) {
     if('style' in columns[i]) {
       if(columns[i].style == "dayScale" || rowData[i]) {
         //console.log(cval);
-        let pc = Math.min((parseInt(rowData[i]) < 1 ? 0: parseInt(rowData[i]) / 100), 1.0);
+        let pc = Math.min((parseInt(rowData[i]) < 1 ? 0: parseInt(rowData[i]) / 100), 0.8);
         cell.style.backgroundColor = getColor(pc);
        	//cel.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
       }
