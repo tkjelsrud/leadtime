@@ -259,8 +259,8 @@ function generateTableRow(table, rowData, columns) {
     if('style' in columns[i]) {
       if(columns[i].style == "dayScale") {
         console.log(cval);
-        cval.style.backgroundColor = "#ff0000";
-       	cval.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
+        cell.style.backgroundColor = "#ff0000";
+       	cell.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
       }
     }
     //let cval = document.createElement('div');
