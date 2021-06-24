@@ -255,7 +255,7 @@ function generateTableRow(table, rowData, columns) {
   let row = table.insertRow();
   for(let i = 0; i < rowData.length; i++) {
     let cell = row.insertCell();
-    let cval = document.createTextNode(rowData[i]);
+    let cval = document.createTextNode("" + rowData[i]);
     if('style' in columns[i]) {
       if(columns[i].style == "dayScale") {
         console.log(cval);
