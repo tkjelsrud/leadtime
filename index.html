@@ -257,10 +257,11 @@ function generateTableRow(table, rowData, columns) {
     let cell = row.insertCell();
     let cval = document.createTextNode("" + rowData[i]);
     if('style' in columns[i]) {
-      if(columns[i].style == "dayScale") {
+      if(columns[i].style == "dayScale" || rowData[i]) {
         //console.log(cval);
-        //cell.style.backgroundColor = "#ff0000";
-       	//cell.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
+        let pc = (parseInt(rowData[i]) < 1 ? 0: parseInt(rowData[i]) / 100);
+        cell.style.backgroundColor = getColor(pc);
+       	//cel.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
       }
     }
     //let cval = document.createElement('div');
