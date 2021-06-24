@@ -258,7 +258,7 @@ function generateTableRow(table, rowData, columns) {
     let cval = document.createTextNode("" + rowData[i]);
     if('style' in columns[i]) {
       if(columns[i].style == "dayScale") {
-        console.log(cval);
+        //console.log(cval);
         cell.style.backgroundColor = "#ff0000";
        	cell.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
       }
