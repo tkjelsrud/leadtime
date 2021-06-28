@@ -133,9 +133,16 @@ var configStory = {
     {'title': "Social", 'eval': "jiraSocialCount(xo)", 'class': 'narrow'},
     {'title': "History", 'eval': "jiraHistory(xo)"},
     {'title': "Leadtime", 'eval': "jiraLeadtime(xo)", 'class': "narrow"},
-    {'title': "ELinks", 'eval': "jiraEpicLinks(xo)"}
+    {'title': "ELinks", 'eval': "jiraEpicLinks(xo)"},
+    {'title': "LT An", 'eval': "jiraEpicLeadtime(xo, 'Analysis')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
+    {'title': "LT De", 'eval': "jiraEpicLeadtime(xo, 'In Progress')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
+    {'title': "LT Si", 'eval': "jiraEpicLeadtime(xo, 'SIT')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
+    {'title': "LT Ua", 'eval': "jiraEpicLeadtime(xo, 'UAT')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
+    {'title': "LT Rp", 'eval': "jiraEpicLeadtime(xo, 'Ready for production')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'}
   ]
 };
+  
+//"Analysis: 28d 0h 29m, In Progress: 7d 3h 2m, SIT: 6d 20h 58m, UAT: 12d 23h 49m, Ready for production: 16d 4h 30m"
 
 function showError(err) {
   document.getElementById("error").style.display = "block";
@@ -385,25 +392,6 @@ function jiraEpicLeadtime(xo, filter) {
 	  let found = ph[1].match(/([0-9]+)d/);
       if(found[1]) {
         //console.log("Match -> " + found[1] + " found " + found);
-        return found[1];
-        
-      }
-    }
-  }
-  return "";
-}
-
-function jiraStoryLeadtime(xo, filter) {
-  //  "Analysis: 28d 0h 29m, In Progress: 7d 3h 2m, SIT: 6d 20h 58m, UAT: 12d 23h 49m, Ready for production: 16d 4h 30m"
-  let res = new Array();
-  let arr = xo.fields.customfield_12415.split(',');
-  for(let i = 0; i < arr.length; i++) {
-    let ph = arr[i].split(':');
-    if(ph[0].trim() == filter) {
-      console.log(ph[0] + " -> " + ph[1]);
-	  let found = ph[1].match(/([0-9]+)d/);
-      if(found[1]) {
-        console.log("Match -> " + found[1] + " found " + found);
         return found[1];
         
       }
