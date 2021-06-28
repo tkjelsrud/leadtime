@@ -363,10 +363,13 @@ function jiraLeadtime(xo) {
   // Assess if actually done
   let cd = new Date(xo.fields.created);
   let rd = new Date();
-  if(xo.fields.resolutiondate)
+  let done = false;
+  if(xo.fields.resolutiondate) {
     rd = new Date(xo.fields.resolutiondate);
+    done = true;
+  }
 
-  return Math.floor((rd - cd) / (1000*60*60*24)) + "d";
+  return Math.floor((rd - cd) / (1000*60*60*24)) + "d" + (done ? " (resolved)" : "");
 }
   
 function jiraTechFamilies(xo) {
