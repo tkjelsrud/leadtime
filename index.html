@@ -98,7 +98,7 @@ var memory = {'items': {}};
 
 // Table configuration (keep as dynamic as possible)
 var config = {
-  'filters': [],
+  'filters': ["xo.fields.issuetype.name==Epic"],
   'columns': [
     {'title': "Key", 'eval': "xo.key", 'class': 'narrow'},
     {'title': "Title", 'eval': "xo.fields.summary"},
