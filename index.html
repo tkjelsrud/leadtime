@@ -385,10 +385,26 @@ function getColor(value){
   return ["hsl(",hue,",100%,50%)"].join("");
 }
   
+function getQueryParams(qs) {
+  qs = qs.split('+').join(' ');
+  var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+  while (tokens = re.exec(qs)) {
+    params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+  }
+
+  return params;
+}
+  
 document.addEventListener("DOMContentLoaded", function(event) {
+  var query = getQueryParams(document.location.search);
+  if('c' in query) {
+    config = eval(query['c']);
+  }
   loadStore();
   updateTable();
-});
+}););
 </script>
 <script type="text/javascript">
 
