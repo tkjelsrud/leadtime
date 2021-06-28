@@ -132,6 +132,8 @@ var configStory = {
     {'title': "Social", 'eval': "jiraSocialCount(xo)", 'class': 'narrow'},
     {'title': "History", 'eval': "jiraHistory(xo)"},
     {'title': "Leadtime", 'eval': "jiraLeadtime(xo)", 'class': "narrow"},
+    
+    {'title': "LT BL", 'eval': "jiraEpicLeadtime(xo, 'Backlog')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT Ana", 'eval': "jiraEpicLeadtime(xo, 'Analysis')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT Dev", 'eval': "jiraEpicLeadtime(xo, 'In Progress')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT SIT", 'eval': "jiraEpicLeadtime(xo, 'SIT')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
