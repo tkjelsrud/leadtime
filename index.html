@@ -207,47 +207,45 @@ function updateTable() {
   
   for(let k in memory.items) {
     let xo = memory.items[k];
+    let incl = true;
     
     // Check if not filtered (if so: skip)
     for(let i = 0; i < config.filters.length; i++) {
-    	
       try {
-      	val = eval(config.filters[i]);
-        if(!val) {
-          console.log("Skip:");
-          console.log(xo);
-        }
+      	incl = eval(config.filters[i]);
       }
       catch(err) {
         showError("FILTER " + config.columns[i].title + " ERROR " + err);
       }
     }
     
+    if(incl) {
     // Calculate row values (jira item)
     let rowData = new Array();
-    for(let i = 0; i < config.columns.length; i++) {
-      let val = "";
-      try {
-      	val = eval(config.columns[i].eval);
-      }
-      catch(err) {
-        showError("DATA " + config.columns[i].title + " ERROR " + err);
-      }
-      rowData.push(val);
-      
-      // Maybe average is not that useful, either way
-      //
-      /*if(config.columns[i].sum && val != "") {
-        if(config.columns[i].title in sum) {
-          sum[config.columns[i].title] += parseInt(val);
+      for(let i = 0; i < config.columns.length; i++) {
+        let val = "";
+        try {
+          val = eval(config.columns[i].eval);
         }
-        else {
-          sum[config.columns[i].title] = parseInt(val);
+        catch(err) {
+          showError("DATA " + config.columns[i].title + " ERROR " + err);
         }
-      }*/
+        rowData.push(val);
+
+        // Maybe average is not that useful, either way
+        //
+        /*if(config.columns[i].sum && val != "") {
+          if(config.columns[i].title in sum) {
+            sum[config.columns[i].title] += parseInt(val);
+          }
+          else {
+            sum[config.columns[i].title] = parseInt(val);
+          }
+        }*/
+      }
+
+      generateTableRow(table, rowData, config.columns);
     }
-    
-    generateTableRow(table, rowData, config.columns);
   }
   
   //generateTableSummary(table, config.columns);
