@@ -219,7 +219,7 @@ function updateTable() {
         }
       }
       catch(err) {
-        showError(config.columns[i].title + " ERROR " + err);
+        showError("FILTERING, " + config.columns[i].title + " ERROR " + err);
       }
     }
     
@@ -228,7 +228,7 @@ function updateTable() {
     for(let i = 0; i < config.columns.length; i++) {
       let val = "";
       try {
-      	val = eval(config.columns[i].eval);
+      	val = eval("ROWDATA, " + config.columns[i].eval);
       }
       catch(err) {
         showError(config.columns[i].title + " ERROR " + err);
