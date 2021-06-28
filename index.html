@@ -98,7 +98,7 @@ var memory = {'items': {}};
 
 // Table configuration (keep as dynamic as possible)
 var config = {
-  'filters': ["xo.fields.issuetype.name==Epic"],
+  'filters': ["xo.fields.issuetype.name=='Epic'"],
   'columns': [
     {'title': "Key", 'eval': "xo.key", 'class': 'narrow'},
     {'title': "Title", 'eval': "xo.fields.summary"},
@@ -207,6 +207,21 @@ function updateTable() {
   
   for(let k in memory.items) {
     let xo = memory.items[k];
+    
+    // Check if not filtered (if so: skip)
+    for(let i = 0; i < config.filters.length; i++) {
+    	
+      try {
+      	val = eval(config.filters[i]);
+        if(!val) {
+          console.log("Skip:");
+          console.log(xo);
+        }
+      }
+      catch(err) {
+        showError(config.columns[i].title + " ERROR " + err);
+      }
+    }
     
     // Calculate row values (jira item)
     let rowData = new Array();
