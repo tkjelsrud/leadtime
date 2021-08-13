@@ -307,7 +307,7 @@ function generateTableRow(table, rowData, columns) {
        	//cel.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
       }
       if(columns[i].style == "apiLink") {
-        cell.setAttribute('onclick', getApiLink() + rowData[i] + '?expand=changelog');
+        cell.setAttribute('onclick', 'window.open("' + getApiLink() + rowData[i] + '?expand=changelog", "_blank");');
       }
     }
     //let cval = document.createElement('div');
