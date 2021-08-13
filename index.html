@@ -100,7 +100,7 @@ var memory = {'items': {}};
 var config = {
   'filters': ["xo.fields.issuetype.name=='Epic'"],
   'columns': [
-    {'title': "Key", 'eval': "xo.key", 'class': 'narrow'},
+    {'title': "Key", 'eval': "xo.key", 'class': 'narrow', 'style': 'apiLink'},
     {'title': "Title", 'eval': "xo.fields.summary"},
     {'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'},
     {'title': "TFam", 'eval': "jiraTechFamilies(xo)", 'class': 'narrow'},
@@ -196,6 +196,13 @@ function storeJiraItem(jkey, jsn) {
   
 function storeItemIndex() {
   localStorage.setItem("items", Object.keys(memory.items).join(";"));
+}
+  
+function loadApiLink() {
+  let link = localStorage.getItem("apiLink");
+  if(!link)
+    return "#";
+  return link;
 }
 
 function loadStore() {
@@ -299,8 +306,8 @@ function generateTableRow(table, rowData, columns) {
         cell.style.backgroundColor = getColor(pc);
        	//cel.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
       }
-      if(columns[i].style == "apilink") {
-        cell.setAttribute('onclick', 'http://www.test.com/' + rowData[i] + ' ');
+      if(columns[i].style == "apiLink") {
+        cell.setAttribute('onclick', loadApiLink + rowData[i] + '?expand=changelog');
       }
     }
     //let cval = document.createElement('div');
