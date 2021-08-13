@@ -299,6 +299,9 @@ function generateTableRow(table, rowData, columns) {
         cell.style.backgroundColor = getColor(pc);
        	//cel.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
       }
+      if(columns[i].style == "apilink") {
+        cell.setAttribute('onclick', 'http://www.test.com/' + rowData[i] + ' ');
+      }
     }
     //let cval = document.createElement('div');
     //cval.innerHTML = 
