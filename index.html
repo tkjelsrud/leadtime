@@ -115,7 +115,7 @@ var config = {
     {'title': "LT ES", 'eval': "jiraEpicLeadtime(xo, 'Explore solutions')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT SH", 'eval': "jiraEpicLeadtime(xo, 'Specify How')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT DL", 'eval': "jiraEpicLeadtime(xo, 'Development Lifecycle')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
-    {'title': "ELinks", 'eval': "jiraEpicLinks(xo)"}
+    {'title': "ELinks", 'eval': "jiraEpicLinks(xo).split(" ").lengt", 'class': "narrownum"}
   ]
 };
   
@@ -136,7 +136,7 @@ var configStory = {
     {'title': "LT Dev", 'eval': "jiraEpicLeadtime(xo, 'In Progress')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT SIT", 'eval': "jiraEpicLeadtime(xo, 'SIT')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT UAT", 'eval': "jiraEpicLeadtime(xo, 'UAT')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
-    {'title': "LT RPr", 'eval': "jiraEpicLeadtime(xo, 'Ready for production').split(" ").length", 'class': "narrownum", 'sum': true, 'style': 'dayScale'}
+    {'title': "LT RPr", 'eval': "jiraEpicLeadtime(xo, 'Ready for production')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'}
   ]
 };
   
