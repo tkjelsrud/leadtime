@@ -136,7 +136,7 @@ var configStory = {
     {'title': "LT Dev", 'eval': "jiraEpicLeadtime(xo, 'In Progress')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT SIT", 'eval': "jiraEpicLeadtime(xo, 'SIT')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT UAT", 'eval': "jiraEpicLeadtime(xo, 'UAT')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
-    {'title': "LT RPr", 'eval': "jiraEpicLeadtime(xo, 'Ready for production')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'}
+    {'title': "LT RPr", 'eval': "jiraEpicLeadtime(xo, 'Ready for production').split(" ").length", 'class': "narrownum", 'sum': true, 'style': 'dayScale'}
   ]
 };
   
