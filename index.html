@@ -319,13 +319,23 @@ function generateTableRow(table, rowData, columns) {
 function jiraSocialCount(xo) {
   // Custom function to count (unique) people involved
   //let ppl = {}; use as a global variable (hacK)
-  ppl[xo.fields.assignee.emailAddress] = 1;
-  ppl[xo.fields.creator.emailAddress] = 1;
-  ppl[xo.fields.reporter.emailAddress] = 1;
+  ppl = incrVal(ppl, xo.fields.assignee.emailAddress);
+  ppl = incrVal(ppl, xo.fields.creator.emailAddress);
+  ppl = incrVal(ppl, xo.fields.reporter.emailAddress);
+  
   for(let j = 0; j < xo.fields.comment.comments.length; j++) {
-    ppl[xo.fields.comment.comments[j].author.emailAddress] = 1;
+    ppl = incrVal(ppl, xo.fields.comment.comments[j].author.emailAddress);
   }
   return "ppl:" + Object.keys(ppl).length + " cmt:" + xo.fields.comment.total;
+}
+  
+function incrVal(arr, val) {
+  if(val in arr)
+    arr[val]++;
+  else
+    arr[val] = 1;
+  
+  return arr;
 }
   
 function jiraSubtaskCount(xo) {
