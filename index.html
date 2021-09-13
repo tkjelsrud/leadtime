@@ -93,6 +93,7 @@
 
 <script type="text/javascript">
 var memory = {'items': {}};
+var ppl = {};
 
 // Table configuration (keep as dynamic as possible)
 var config = {
@@ -317,7 +318,7 @@ function generateTableRow(table, rowData, columns) {
   
 function jiraSocialCount(xo) {
   // Custom function to count (unique) people involved
-  let ppl = {};
+  //let ppl = {}; use as a global variable (hacK)
   ppl[xo.fields.assignee.emailAddress] = 1;
   ppl[xo.fields.creator.emailAddress] = 1;
   ppl[xo.fields.reporter.emailAddress] = 1;
