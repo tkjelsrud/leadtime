@@ -298,16 +298,16 @@ function generateTableRow(table, rowData, columns) {
   let row = table.insertRow();
   for(let i = 0; i < rowData.length; i++) {
     let cell = row.insertCell();
-    let cval = document.createTextNode("" + rowData[i]);
+    let cval = document.createTextNode("" + rowData[i].val);
     if('style' in columns[i]) {
       if(columns[i].style == "dayScale" || rowData[i]) {
         //console.log(cval);
-        let pc = Math.min((parseInt(rowData[i]) < 1 ? 0: parseInt(rowData[i]) / 100), 0.9);
+        let pc = Math.min((parseInt(rowData[i].val) < 1 ? 0: parseInt(rowData[i].val) / 100), 0.9);
         cell.style.backgroundColor = getColor(pc);
        	//cel.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
       }
       if(columns[i].style == "apiLink") {
-        cell.setAttribute('onclick', 'window.open("' + getApiLink() + rowData[i] + '?expand=changelog", "_blank");');
+        cell.setAttribute('onclick', 'window.open("' + getApiLink() + rowData[i].val + '?expand=changelog", "_blank");');
       }
     }
     //let cval = document.createElement('div');
@@ -326,7 +326,7 @@ function jiraSocialCount(xo) {
   for(let j = 0; j < xo.fields.comment.comments.length; j++) {
     ppl = incrVal(ppl, xo.fields.comment.comments[j].author.emailAddress);
   }
-  return "ppl:" + Object.keys(ppl).length + " cmt:" + xo.fields.comment.total;
+  return {'val': "ppl:" + Object.keys(ppl).length + " cmt:" + xo.fields.comment.total, 'tip': ppl}
 }
   
 function incrVal(arr, val) {
@@ -359,7 +359,7 @@ function jiraHistory(xo) {
         res = shortDate(hi.created) + " " + it.fromString + "->" + it.toString + " "; //it.fromString 
     }
   }
-  return res;
+  return {'val': res};
 }
   
 function jiraEpicLinks(xo) {
@@ -376,7 +376,7 @@ function jiraEpicLinks(xo) {
         res += it.toString + " ";
     }
   }
-  return res;
+  return {'val': res};
 }
   
 function jiraLeadtime(xo) {
@@ -389,7 +389,7 @@ function jiraLeadtime(xo) {
     done = true;
   }
 
-  return Math.floor((rd - cd) / (1000*60*60*24)) + "d" + (done ? " (resolved)" : "");
+  return {'val': Math.floor((rd - cd) / (1000*60*60*24)) + "d" + (done ? " (resolved)" : "")};
 }
   
 function jiraTechFamilies(xo) {
@@ -399,7 +399,7 @@ function jiraTechFamilies(xo) {
     res.push(xo.fields.customfield_13515[i].value);
   }
   
-  return res.join(",");
+  return {'val': res.join(",")};
 }
 
 function jiraEpicLeadtime(xo, filter) {
@@ -413,12 +413,12 @@ function jiraEpicLeadtime(xo, filter) {
 	  let found = ph[1].match(/([0-9]+)d/);
       if(found[1]) {
         //console.log("Match -> " + found[1] + " found " + found);
-        return found[1];
+        return {'val': found[1]};
         
       }
     }
   }
-  return "";
+  return {'val': ''};
 }
   
 function shortDate(dateStr) {
