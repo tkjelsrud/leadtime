@@ -301,7 +301,7 @@ function generateTableRow(table, rowData, columns) {
     let val = ((Array.isArray(rowData[i]) || typeof rowData[i] === 'object') ? rowData[i].val : rowData[i]);
     let cval = document.createTextNode("" + val);
     
-    if(typeof rowData[i] === 'object' || 'tip' in rowData[i])
+    if(typeof rowData[i] === 'object' && 'tip' in rowData[i])
       cval.setAttribute("title", rowData[i].tip);
     
     if('style' in columns[i]) {
