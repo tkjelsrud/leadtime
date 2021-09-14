@@ -300,6 +300,10 @@ function generateTableRow(table, rowData, columns) {
     let cell = row.insertCell();
     let val = ((Array.isArray(rowData[i]) || typeof rowData[i] === 'object') ? rowData[i].val : rowData[i]);
     let cval = document.createTextNode("" + val);
+    
+    if('tip' in rowData[i])
+      cval.setAttribute("title", rowData[i].tip);
+    
     if('style' in columns[i]) {
       if(columns[i].style == "dayScale" || val) {
         //console.log(cval);
