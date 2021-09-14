@@ -298,16 +298,17 @@ function generateTableRow(table, rowData, columns) {
   let row = table.insertRow();
   for(let i = 0; i < rowData.length; i++) {
     let cell = row.insertCell();
-    let cval = document.createTextNode("" + rowData[i].val);
+    let val = (Array.isArray(rowData[i]) ? rowData[i].val : rowData[i]);
+    let cval = document.createTextNode("" + val);
     if('style' in columns[i]) {
-      if(columns[i].style == "dayScale" || rowData[i]) {
+      if(columns[i].style == "dayScale" || val) {
         //console.log(cval);
-        let pc = Math.min((parseInt(rowData[i].val) < 1 ? 0: parseInt(rowData[i].val) / 100), 0.9);
+        let pc = Math.min((parseInt(val) < 1 ? 0: parseInt(val) / 100), 0.9);
         cell.style.backgroundColor = getColor(pc);
-       	//cel.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 
+       	//cel.style.filter = "brightness(" + parseInt(rowData[i]) + "%)"; 2
       }
       if(columns[i].style == "apiLink") {
-        cell.setAttribute('onclick', 'window.open("' + getApiLink() + rowData[i].val + '?expand=changelog", "_blank");');
+        cell.setAttribute('onclick', 'window.open("' + getApiLink() + val + '?expand=changelog", "_blank");');
       }
     }
     //let cval = document.createElement('div');
