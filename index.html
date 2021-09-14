@@ -298,7 +298,7 @@ function generateTableRow(table, rowData, columns) {
   let row = table.insertRow();
   for(let i = 0; i < rowData.length; i++) {
     let cell = row.insertCell();
-    let val = (Array.isArray(rowData[i]) || typeof rowData[i] === 'object' ? rowData[i].val : rowData[i]);
+    let val = ((Array.isArray(rowData[i]) || typeof rowData[i] === 'object') ? rowData[i].val : rowData[i]);
     let cval = document.createTextNode("" + val);
     if('style' in columns[i]) {
       if(columns[i].style == "dayScale" || val) {
