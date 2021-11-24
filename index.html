@@ -115,7 +115,7 @@ var config = {
     {'title': "LT ES", 'eval': "jiraEpicLeadtime(xo, 'Explore solutions')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT SH", 'eval': "jiraEpicLeadtime(xo, 'Specify How')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT DL", 'eval': "jiraEpicLeadtime(xo, 'Development Lifecycle')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
-    {'title': "ELinks", 'eval': "jiraEpicLinks(xo).split(' ').length", 'class': "narrownum"}
+    {'title': "ELinks", 'eval': "jiraEpicLinks(xo).val.split(' ').length", 'class': "narrownum"}
   ]
 };
   
