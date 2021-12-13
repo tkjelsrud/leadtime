@@ -84,9 +84,16 @@
     border-width: 5px 0 5px 6px;
     border-color: transparent transparent transparent #808080; }
   </style>
+  <script src="https://d3js.org/d3.v4.js"></script>
+
 </head>
 
 <body onpaste="parsePased(event)">
+    <!-- Load d3.js -->
+
+
+  <!-- Create a div where the graph will take place -->
+  <div id="my_dataviz"></div>
   <div id="error" style="display:none">&nbsp;</div>
   <div id="dataGrid"></div>
 
@@ -415,18 +422,103 @@ function jiraEpicLeadtime(xo, filter) {
 }
 
 function tableSummary() {
+  // Warning, poor code ahead
   // This is just a hack for now to summarize some columns (hard coded)
   let rows = document.getElementsByTagName("table")[0].rows;
-  let sums = {'LT': {'data': [], 'min': 999999999999, 'max': 0, 'avg': 0}};
+  let sums = {
+    'LT': {'data': [], 'min': 999999999999, 'max': 0, 'avg': 0, 'mean': 0, 'maxId': "", 'meanId': "", 'minId': ""},
+    'VD': {'data': [], 'min': 999999999999, 'max': 0, 'avg': 0, 'mean': 0, 'maxId': "", 'meanId': "", 'minId': ""},
+    'ES': {'data': [], 'min': 999999999999, 'max': 0, 'avg': 0, 'mean': 0, 'maxId': "", 'meanId': "", 'minId': ""},
+    'SH': {'data': [], 'min': 999999999999, 'max': 0, 'avg': 0, 'mean': 0, 'maxId': "", 'meanId': "", 'minId': ""},
+    'DL': {'data': [], 'min': 999999999999, 'max': 0, 'avg': 0, 'mean': 0, 'maxId': "", 'meanId': "", 'minId': ""}
+  };
 
   for(let i = 1; i < rows.length; i++) {
     let lt = parseInt(rows[i].children[11].textContent);
     sums.LT.data.push(lt)
-    if(lt > sums.LT.max) sums.LT.max = lt;
-    if(lt < sums.LT.min) sums.LT.min = lt;
+    if(lt > sums.LT.max) {
+      sums.LT.max = lt;
+      sums.LT.maxId = rows[i].children[0].textContent;
+    }
+    if(lt < sums.LT.min) {
+      sums.LT.min = lt;
+      sums.LT.minId = rows[i].children[0].textContent;
+    }
+
+    if(rows[i].children[12].textContent.trim() != "") {
+      let vd = parseInt(rows[i].children[12].textContent);
+      sums.VD.data.push(vd)
+      if(vd > sums.VD.max) {
+        sums.VD.max = vd;
+        sums.VD.maxId = rows[i].children[0].textContent;
+      }
+      if(vd < sums.VD.min) {
+        sums.VD.min = vd;
+        sums.VD.minId = rows[i].children[0].textContent;
+      }
+    }
+
+    if(rows[i].children[13].textContent.trim() != "") {
+      let es = parseInt(rows[i].children[13].textContent);
+      sums.ES.data.push(es)
+      if(es > sums.ES.max) {
+        sums.ES.max = es;
+        sums.ES.maxId = rows[i].children[0].textContent;
+      }
+      if(es < sums.ES.min) {
+        sums.ES.min = es;
+        sums.ES.minId = rows[i].children[0].textContent;
+      }
+    }
+
+    if(rows[i].children[14].textContent.trim() != "") {
+      let sh = parseInt(rows[i].children[14].textContent);
+      sums.SH.data.push(sh)
+      if(sh > sums.SH.max) {
+        sums.SH.max = sh;
+        sums.SH.maxId = rows[i].children[0].textContent;
+      }
+      if(sh < sums.SH.min) {
+        sums.SH.min = sh;
+        sums.SH.minId = rows[i].children[0].textContent;
+      }
+    }
+
+    if(rows[i].children[15].textContent.trim() != "") {
+      let dl = parseInt(rows[i].children[15].textContent);
+      sums.DL.data.push(dl)
+      if(dl > sums.DL.max) {
+        sums.DL.max = dl;
+        sums.DL.maxId = rows[i].children[0].textContent;
+      }
+      if(dl < sums.SH.min) {
+        sums.DL.min = dl;
+        sums.DL.minId = rows[i].children[0].textContent;
+      }
+    }
   }
 
   sums.LT.avg = sums.LT.data.reduce((a, b) => a + b, 0) / sums.LT.data.length;
+  sums.LT.data.sort(function(a, b){return b-a});
+  sums.LT.mean = sums.LT.data[Math.floor(sums.LT.data.length / 2)];
+  // Ok so the following does not work, because table is not sorted...
+  //sums.LT.meanId = rows[Math.floor(sums.LT.data.length / 2)].children[0].textContent;
+
+  sums.VD.avg = sums.VD.data.reduce((a, b) => a + b, 0) / sums.VD.data.length;
+  sums.VD.data.sort(function(a, b){return b-a});
+  sums.VD.mean = sums.VD.data[Math.floor(sums.VD.data.length / 2)];
+
+  sums.ES.avg = sums.ES.data.reduce((a, b) => a + b, 0) / sums.ES.data.length;
+  sums.ES.data.sort(function(a, b){return b-a});
+  sums.ES.mean = sums.ES.data[Math.floor(sums.ES.data.length / 2)];
+
+  sums.SH.avg = sums.SH.data.reduce((a, b) => a + b, 0) / sums.SH.data.length;
+  sums.SH.data.sort(function(a, b){return b-a});
+  sums.SH.mean = sums.SH.data[Math.floor(sums.SH.data.length / 2)];
+
+  sums.DL.avg = sums.DL.data.reduce((a, b) => a + b, 0) / sums.DL.data.length;
+  sums.DL.data.sort(function(a, b){return b-a});
+  sums.DL.mean = sums.DL.data[Math.floor(sums.DL.data.length / 2)];
 
   console.log(sums);
 }
@@ -462,7 +554,73 @@ document.addEventListener("DOMContentLoaded", function(event) {
   updateTable();
 });
 </script>
-<script type="text/javascript">
+<script>
+
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 20, left: 50},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_stacked.csv", function(data) {
+
+  // List of subgroups = header of the csv files = soil condition here
+  var subgroups = data.columns.slice(1)
+
+  // List of groups = species here = value of the first column called group -> I show them on the X axis
+  var groups = d3.map(data, function(d){return(d.group)}).keys()
+
+  // Add X axis
+  var x = d3.scaleBand()
+      .domain(groups)
+      .range([0, width])
+      .padding([0.2])
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x).tickSizeOuter(0));
+
+  // Add Y axis
+  var y = d3.scaleLinear()
+    .domain([0, 60])
+    .range([ height, 0 ]);
+  svg.append("g")
+    .call(d3.axisLeft(y));
+
+  // color palette = one color per subgroup
+  var color = d3.scaleOrdinal()
+    .domain(subgroups)
+    .range(['#e41a1c','#377eb8','#4daf4a'])
+
+  //stack the data? --> stack per subgroup
+  var stackedData = d3.stack()
+    .keys(subgroups)
+    (data)
+
+  // Show the bars
+  svg.append("g")
+    .selectAll("g")
+    // Enter in the stack data = loop key per key = group per group
+    .data(stackedData)
+    .enter().append("g")
+      .attr("fill", function(d) { return color(d.key); })
+      .selectAll("rect")
+      // enter a second time = loop subgroup per subgroup to add all rectangles
+      .data(function(d) { return d; })
+      .enter().append("rect")
+        .attr("x", function(d) { return x(d.data.group); })
+        .attr("y", function(d) { return y(d[1]); })
+        .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+        .attr("width",x.bandwidth())
+})
 
 </script>
 </body>
