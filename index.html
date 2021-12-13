@@ -115,7 +115,7 @@ var config = {
     {'title': "LT SH", 'eval': "jiraEpicLeadtime(xo, 'Specify How')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT DL", 'eval': "jiraEpicLeadtime(xo, 'Development Lifecycle')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "ELinks", 'eval': "jiraEpicLinks(xo).val.split(' ').length", 'class': "narrownum"},
-    {'title': "Stories", 'eval': "jiraFindStories(xo)"}
+    {'title': "Stories", 'eval': "jiraFindStories(xo).val.join(' ')"}
   ]
 };
   
@@ -417,9 +417,9 @@ function jiraEpicLeadtime(xo, filter) {
 function jiraFindStories(xo) {
   // Do a regex in all the text
   let str = JSON.stringify(xo);
-  const matches_array = str.match(/[A-Z]+-[0-9]+/gi);
-  console.log(matches_array);
-  return "";
+  const matches_array = str.match(/[A-Z]+-[0-9]+/g);
+  
+  return {'val': matches_array};
 }
   
 function shortDate(dateStr) {
