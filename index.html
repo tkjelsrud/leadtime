@@ -229,7 +229,6 @@ function updateTable() {
   // Empty old rows
   document.getElementById("dataGrid").innerHTML = "";
   let table = document.createElement("table");
-  let sum = {};
   
   generateTableHead(table, config.columns);
   
@@ -261,17 +260,6 @@ function updateTable() {
           showError("DATA " + config.columns[i].title + " ERROR " + err);
         }
         rowData.push(val);
-
-        // Maybe average is not that useful, either way
-        //
-        /*if(config.columns[i].sum && val != "") {
-          if(config.columns[i].title in sum) {
-            sum[config.columns[i].title] += parseInt(val);
-          }
-          else {
-            sum[config.columns[i].title] = parseInt(val);
-          }
-        }*/
       }
 
       generateTableRow(table, rowData, config.columns);
@@ -424,6 +412,20 @@ function jiraEpicLeadtime(xo, filter) {
     }
   }
   return {'val': ''};
+}
+
+function tableSummary() {
+  // This is just a hack for now to summarize some columns (hard coded)
+  let rows = document.getElementsByTagName("table")[0].rows;
+  let sums = {'LT': {'data': [], 'min': 999999999999, 'max': 0}};
+
+  for(let i = 1; i < rows.length; i++) {
+    let lt = parseInt(rows[i].children[11].textContent);
+    sums.LT.data.push(lt)
+    if(lt > sums.LT.max) sums.LT.max = lt;
+    if(lt < sums.LT.min) sums.LT.min = lt;
+  }
+  console.log(sums);
 }
   
 function shortDate(dateStr) {
