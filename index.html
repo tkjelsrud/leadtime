@@ -417,7 +417,7 @@ function jiraEpicLeadtime(xo, filter) {
 function tableSummary() {
   // This is just a hack for now to summarize some columns (hard coded)
   let rows = document.getElementsByTagName("table")[0].rows;
-  let sums = {'LT': {'data': [], 'min': 999999999999, 'max': 0}};
+  let sums = {'LT': {'data': [], 'min': 999999999999, 'max': 0, 'avg': 0}};
 
   for(let i = 1; i < rows.length; i++) {
     let lt = parseInt(rows[i].children[11].textContent);
@@ -425,6 +425,9 @@ function tableSummary() {
     if(lt > sums.LT.max) sums.LT.max = lt;
     if(lt < sums.LT.min) sums.LT.min = lt;
   }
+
+  sums.LT.avg = sums.LT.data.reduce((a, b) => a + b, 0) / sums.LT.data.length;
+
   console.log(sums);
 }
   
