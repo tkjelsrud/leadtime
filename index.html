@@ -93,7 +93,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
 <script type="text/javascript">
 var memory = {'items': {}};
-var ppl = {};
 
 // Table configuration (keep as dynamic as possible)
 var config = {
@@ -311,7 +310,7 @@ function generateTableRow(table, rowData, columns) {
   
 function jiraSocialCount(xo) {
   // Custom function to count (unique) people involved
-  //let ppl = {}; use as a global variable (hacK)
+  let ppl = {}; 
   ppl = incrVal(ppl, xo.fields.assignee.emailAddress);
   ppl = incrVal(ppl, xo.fields.creator.emailAddress);
   ppl = incrVal(ppl, xo.fields.reporter.emailAddress);
