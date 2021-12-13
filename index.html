@@ -84,19 +84,12 @@
     border-width: 5px 0 5px 6px;
     border-color: transparent transparent transparent #808080; }
   </style>
-  <script src="https://d3js.org/d3.v4.js"></script>
 
 </head>
 
 <body onpaste="parsePased(event)">
-    <!-- Load d3.js -->
-
-
-  <!-- Create a div where the graph will take place -->
-  <div id="my_dataviz"></div>
   <div id="error" style="display:none">&nbsp;</div>
   <div id="dataGrid"></div>
-
 
 <script type="text/javascript">
 var memory = {'items': {}};
@@ -420,8 +413,49 @@ function jiraEpicLeadtime(xo, filter) {
   }
   return {'val': ''};
 }
+  
+function shortDate(dateStr) {
+  return (new Date(dateStr)).toLocaleDateString('no-nb'); 
+}
+  
+function getColor(value){
+  //value from 0 to 1
+  var hue=((1-value)*120).toString(10);
+  return ["hsl(",hue,",100%,50%)"].join("");
+}
+  
+function getQueryParams(qs) {
+  qs = qs.split('+').join(' ');
+  var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+  while (tokens = re.exec(qs)) {
+    params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+  }
+
+  return params;
+}
+  
+document.addEventListener("DOMContentLoaded", function(event) {
+  var query = getQueryParams(document.location.search);
+  if('c' in query) {
+    config = eval(query['c']);
+  }
+  loadStore();
+  updateTable();
+});
+</script>
+
+
+<canvas id="myChart" width="400" height="400"></canvas>
+
+
+
+<script>
 
 function tableSummary() {
+  const ctx = document.getElementById('myChart').getContext('2d');
+
   // Warning, poor code ahead
   // This is just a hack for now to summarize some columns (hard coded)
   let rows = document.getElementsByTagName("table")[0].rows;
@@ -520,108 +554,49 @@ function tableSummary() {
   sums.DL.data.sort(function(a, b){return b-a});
   sums.DL.mean = sums.DL.data[Math.floor(sums.DL.data.length / 2)];
 
-  console.log(sums);
-}
-  
-function shortDate(dateStr) {
-  return (new Date(dateStr)).toLocaleDateString('no-nb'); 
-}
-  
-function getColor(value){
-  //value from 0 to 1
-  var hue=((1-value)*120).toString(10);
-  return ["hsl(",hue,",100%,50%)"].join("");
-}
-  
-function getQueryParams(qs) {
-  qs = qs.split('+').join(' ');
-  var params = {},
-        tokens,
-        re = /[?&]?([^=]+)=([^&]*)/g;
-  while (tokens = re.exec(qs)) {
-    params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-  }
-
-  return params;
-}
-  
-document.addEventListener("DOMContentLoaded", function(event) {
-  var query = getQueryParams(document.location.search);
-  if('c' in query) {
-    config = eval(query['c']);
-  }
-  loadStore();
-  updateTable();
+  //console.log(sums);
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Leadtime (total)', 'Value Def', 'Explore Sol', 'Spesify How', 'Delivery'],
+        datasets: [{
+            label: 'Min',
+            data: [sums.LT.min, sums.VD.min, sums.ES.min, sums.SH.min, sums.DL.min],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
 });
+}
+
 </script>
+
+
 <script>
-
-// set the dimensions and margins of the graph
-var margin = {top: 10, right: 30, bottom: 20, left: 50},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-
-// append the svg object to the body of the page
-var svg = d3.select("#my_dataviz")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
-
-// Parse the Data
-d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_stacked.csv", function(data) {
-
-  // List of subgroups = header of the csv files = soil condition here
-  var subgroups = data.columns.slice(1)
-
-  // List of groups = species here = value of the first column called group -> I show them on the X axis
-  var groups = d3.map(data, function(d){return(d.group)}).keys()
-
-  // Add X axis
-  var x = d3.scaleBand()
-      .domain(groups)
-      .range([0, width])
-      .padding([0.2])
-  svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x).tickSizeOuter(0));
-
-  // Add Y axis
-  var y = d3.scaleLinear()
-    .domain([0, 60])
-    .range([ height, 0 ]);
-  svg.append("g")
-    .call(d3.axisLeft(y));
-
-  // color palette = one color per subgroup
-  var color = d3.scaleOrdinal()
-    .domain(subgroups)
-    .range(['#e41a1c','#377eb8','#4daf4a'])
-
-  //stack the data? --> stack per subgroup
-  var stackedData = d3.stack()
-    .keys(subgroups)
-    (data)
-
-  // Show the bars
-  svg.append("g")
-    .selectAll("g")
-    // Enter in the stack data = loop key per key = group per group
-    .data(stackedData)
-    .enter().append("g")
-      .attr("fill", function(d) { return color(d.key); })
-      .selectAll("rect")
-      // enter a second time = loop subgroup per subgroup to add all rectangles
-      .data(function(d) { return d; })
-      .enter().append("rect")
-        .attr("x", function(d) { return x(d.data.group); })
-        .attr("y", function(d) { return y(d[1]); })
-        .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-        .attr("width",x.bandwidth())
-})
-
+  // Charting
+  
 </script>
 </body>
 </html>
