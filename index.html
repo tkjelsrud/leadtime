@@ -554,26 +554,30 @@ function chartSummary() {
   sums.DL.avg = sums.DL.data.reduce((a, b) => a + b, 0) / sums.DL.data.length;
   sums.DL.data.sort(function(a, b){return b-a});
   sums.DL.mean = sums.DL.data[Math.floor(sums.DL.data.length / 2)];
-
+  
   //console.log(sums);
   const myChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: ['Leadtime (total)', 'Value Def', 'Explore Sol', 'Spesify How', 'Delivery'],
         datasets: [{
-            label: 'Min',
+            label: 'Min', 
+            borderColor: "#e3d2d1",
             data: [sums.LT.min, sums.VD.min, sums.ES.min, sums.SH.min, sums.DL.min]
         },
         {
             label: 'Max',
+            borderColor: "#b82921",
             data: [sums.LT.max, sums.VD.max, sums.ES.max, sums.SH.max, sums.DL.max]
         },
         {
             label: 'Avg',
+            borderColor: "#507fbf",
             data: [sums.LT.avg, sums.VD.avg, sums.ES.avg, sums.SH.avg, sums.DL.avg]
         },
         {
             label: 'Mean',
+            borderColor: "#294294",
             data: [sums.LT.mean, sums.VD.mean, sums.ES.mean, sums.SH.mean, sums.DL.mean]
         }
       
