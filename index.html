@@ -325,6 +325,8 @@ function jiraSocialCount(xo) {
   for(let j = 0; j < xo.fields.comment.comments.length; j++) {
     ppl = incrVal(ppl, xo.fields.comment.comments[j].author.emailAddress);
   }
+  storePpl(ppl); // also remember across all epics
+
   return {'val': "ppl:" + Object.keys(ppl).length + " cmt:" + xo.fields.comment.total, 'tip': ppl}
 }
   
@@ -335,6 +337,12 @@ function incrVal(arr, val) {
     arr[val] = 1;
   
   return arr;
+}
+
+function storePpl(pplList) {
+  for (const [key, value] of Object.entries(pplList)) {
+    memory.ppl = incrVal(memory.ppl, key);
+  }
 }
   
 function jiraSubtaskCount(xo) {
