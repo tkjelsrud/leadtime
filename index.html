@@ -630,6 +630,12 @@ function chartSummary() {
                 suggestedMin: 0,
                 suggestedMax: 500
             }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Leadtime (' + sums.LT.data.length + ' items)'
+            }
         }
     }
 });
@@ -658,6 +664,12 @@ function chartPeople() {
                 beginAtZero: true,
                 suggestedMin: 0,
                 suggestedMax: 3
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Fingerprint (' + Object.keys(memory.ppl).length + ' ppl)'
             }
         }
     }
