@@ -643,11 +643,11 @@ function chartPeople() {
   const myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: memory.keys(),
+        labels: Object.keys(memory.ppl),
         datasets: [{
             label: 'PPL', 
             borderColor: "#e3d2d1",
-            data: memory.values()
+            data: Object.values(memory.ppl)
         }
       
       ]
