@@ -90,7 +90,9 @@
 <body onpaste="parsePased(event)">
   <div id="error" style="display:none">&nbsp;</div>
   <div id="dataGrid"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+
 <script type="text/javascript">
 var memory = {'items': {}, 'ppl': {}};
 
@@ -189,13 +191,17 @@ function validJiraItem(jsn) {
   
   return true;
 }
+
+function getSessionCtx() {
+  return window.location.search;
+}
   
 function storeJiraItem(jkey, jsn) {
   localStorage.setItem(jkey, JSON.stringify(jsn));
 }
   
 function storeItemIndex() {
-  localStorage.setItem("items", Object.keys(memory.items).join(";"));
+  localStorage.setItem("items" + getSessionCtx(), Object.keys(memory.items).join(";"));
 }
   
 function getApiLink() {
@@ -206,7 +212,7 @@ function getApiLink() {
 }
 
 function loadStore() {
-  let ind = localStorage.getItem("items");
+  let ind = localStorage.getItem("items" + getSessionCtx());
   if(!ind)
     return false;
   
