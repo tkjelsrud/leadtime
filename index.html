@@ -117,7 +117,7 @@ var config = {
     {'title': "LT SH", 'eval': "jiraEpicLeadtime(xo, 'Specify How')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT DL", 'eval': "jiraEpicLeadtime(xo, 'Development Lifecycle')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "ELinks", 'eval': "jiraEpicLinks(xo).val.split(' ').length", 'class': "narrownum"},
-    {'title': "Rel stories", 'eval': "jiraFindStories(xo).val.join(' ')"}
+    {'title': "Rel stories", 'eval': "jiraFindStories(xo).val.length", 'class': "narrownum"}
   ]
 };
   
