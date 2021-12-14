@@ -646,10 +646,9 @@ function chartPeople() {
         labels: Object.keys(memory.ppl),
         datasets: [{
             label: 'PPL', 
-            borderColor: Math.floor(Math.random()*16777215).toString(16),
+            backgroundColor: Math.floor(Math.random()*16777215).toString(16),
             data: Object.values(memory.ppl)
         }
-      
       ]
     },
     options: {
