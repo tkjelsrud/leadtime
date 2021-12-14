@@ -224,7 +224,7 @@ function loadStore() {
     if(jsn) {
       if(validJiraItem(jsn)) {
         memory.items[jsn.key] = jsn;
-        showError("Loaded " + jsn.key);
+        //showError("Loaded " + jsn.key);
       }
     }
   }
@@ -415,14 +415,14 @@ function jiraEpicLeadtime(xo, filter) {
           //console.log("Match -> " + found[1] + " found " + found);
           return {'val': found[1]};
           
-          }
         }
       }
+    }
   }
   else {
     return {'val': 'N/A'};
   }
-  
+
   return {'val': ''};
 }
 
