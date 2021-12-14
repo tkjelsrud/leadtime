@@ -646,7 +646,7 @@ function chartPeople() {
         labels: Object.keys(memory.ppl),
         datasets: [{
             label: 'PPL', 
-            backgroundColor: Math.floor(Math.random()*16777215).toString(16),
+            backgroundColor: new Array(Object.keys(memory.ppl).length).fill("").map(x => "#" + Math.floor(Math.random()*16777215).toString(16)),
             data: Object.values(memory.ppl)
         }
       ]
