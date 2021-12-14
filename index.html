@@ -415,13 +415,14 @@ function jiraEpicLeadtime(xo, filter) {
           //console.log("Match -> " + found[1] + " found " + found);
           return {'val': found[1]};
           
+          }
         }
       }
-    }
-    else {
-      return {'val': 'N/A'};
-    }
   }
+  else {
+    return {'val': 'N/A'};
+  }
+  
   return {'val': ''};
 }
 
