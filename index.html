@@ -263,7 +263,7 @@ function updateTable() {
           val = eval(config.columns[i].eval);
         }
         catch(err) {
-          showError("DATA " + config.columns[i].title + " ERROR " + err);
+          showError("DATA " + config.columns[i].title + " ERROR " + err + " VAL " + val);
         }
         rowData.push(val);
       }
@@ -404,17 +404,22 @@ function jiraTechFamilies(xo) {
 function jiraEpicLeadtime(xo, filter) {
   //Value Definition: 8d, Explore solutions: 32d, Specify How: 143d, Development Lifecycle: 7d, Done: 2 
   let res = new Array();
-  let arr = xo.fields.customfield_12415.split(',');
-  for(let i = 0; i < arr.length; i++) {
-    let ph = arr[i].split(':');
-    if(ph[0].trim() == filter) {
-      //console.log(ph[0] + " -> " + ph[1]);
-	  let found = ph[1].match(/([0-9]+)d/);
-      if(found[1]) {
-        //console.log("Match -> " + found[1] + " found " + found);
-        return {'val': found[1]};
-        
+  if("customfield_12415" in xo.fields) {
+    let arr = xo.fields.customfield_12415.split(',');
+    for(let i = 0; i < arr.length; i++) {
+      let ph = arr[i].split(':');
+      if(ph.length == 2 && ph[0].trim() == filter) {
+        //console.log(ph[0] + " -> " + ph[1]);
+        let found = ph[1].match(/([0-9]+)d/);
+        if(found[1]) {
+          //console.log("Match -> " + found[1] + " found " + found);
+          return {'val': found[1]};
+          
+        }
       }
+    }
+    else {
+      return {'val': 'N/A'};
     }
   }
   return {'val': ''};
