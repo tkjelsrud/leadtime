@@ -414,7 +414,7 @@ function jiraEpicLeadtime(xo, filter) {
   let res = new Array();
   if("customfield_12415" in xo.fields) {
     let arr = xo.fields.customfield_12415.split(',');
-    console.log(arr);
+    //console.log(arr);
     for(let i = 0; i < arr.length; i++) {
       let ph = arr[i].split(':');
       if(ph.length == 2 && ph[0].trim() == filter) {
