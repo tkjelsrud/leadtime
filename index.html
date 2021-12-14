@@ -425,7 +425,7 @@ function jiraFindStories(xo) {
   let str = JSON.stringify(xo);
   const matches = str.match(/[A-Z]+-[0-9]+/g);
 
-  let unique = matches_array.filter(matches);
+  let unique = matches.filter(onlyUnique);
   
   return {'val': unique};
 }
