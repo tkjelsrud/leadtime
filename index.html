@@ -484,8 +484,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 </script>
 
-<div id="charter" style="width:480px;height:480px">
+<div id="charter" style="width:400px;height:400px;float:left">
   <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+<div id="charter_ppl" style="width:400px;height:400px;float:left">
+  <canvas id="myChartPpl" width="400" height="400"></canvas>
 </div>
 <script>
 
@@ -629,6 +632,36 @@ function chartSummary() {
         }
     }
 });
+}
+
+function chartPeople() {
+  const ctx = document.getElementById('myChartPpl').getContext('2d');
+  //
+  // memory.ppl
+  //
+  const myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: memory.keys(),
+        datasets: [{
+            label: 'PPL', 
+            borderColor: "#e3d2d1",
+            data: memory.values()
+        }
+      
+      ]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                suggestedMin: 0,
+                suggestedMax: 3
+            }
+        }
+    }
+  }
 }
 
 </script>
