@@ -5,6 +5,15 @@
       font-family: Verdana;
       font-size: 10px;
     }
+    #timeline {
+      background-color: #EEE;
+    }
+    #timeline div {
+      position: relative;
+      background-color: #CCC;
+      border: 1px solid grey;
+      filter: drop-shadow(6px 6px 6px grey);
+    }
     #dataGrid {
       /*font-size: 9px !important;*/
       background-color: #FFF;
@@ -89,6 +98,7 @@
 
 <body onpaste="parsePased(event)">
   <div id="error" style="display:none">&nbsp;</div>
+  <div id="timeline"></div>
   <div id="dataGrid"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
