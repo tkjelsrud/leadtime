@@ -33,7 +33,28 @@ function showError(err) {
   
   function getKnownCtx() {
     let cList = localStorage.getItem("ctxList");
-    return cList.split(",");
+
+    return (cList === null ? new Array() : cList.split(","));
+  }
+
+  function addCtxToKnownList() {
+    let ctx = getSessionCtx();
+
+    if(ctx != "") {
+      let cList = localStorage.getItem("ctxList");
+      if(cList === null)
+        localStorage.setItem("ctxList", ctx);
+      else {
+        let cList = getKnownCtx();
+        if(!cList.includes(ctx)) {
+          cList.push(ctx);
+          localStorage.setItem("ctxList", cList.join(','));
+        }
+        // Iterate and find it there?
+        // TODO fix this
+        // fruits.includes("Mango");
+      }
+    }
   }
 
   

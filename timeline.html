@@ -223,6 +223,8 @@
         if('c' in query) {
           config = eval(query['c']);
         }
+        
+        addCtxToKnownList();
         updateContext();
         loadStore();
         createTimeline();
