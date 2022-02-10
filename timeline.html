@@ -1,0 +1,233 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="common/leadtime.css"></link>
+  <link rel="stylesheet" type="text/css" href="common/gantt.css"></link>
+  <script type="text/javascript" src="common/util.js"></script>
+  <script type="text/javascript" src="common/context.js"></script>
+<!--
+    HTML adaptation from
+    https://codepen.io/ph1p/pen/JBBjNy
+-->
+  <script type="text/javascript">
+    function createTimeline() {
+        let dt = new Date();
+        dt.setMonth(dt.getMonth() - 23);
+
+        for(i = 0; i < 24; i++) {
+            let m = getMonthStr(dt.getMonth()) + " " + dt.getFullYear().toString().substr(2,2);
+            let s = document.createElement("span");
+            s.innerText = m;
+            document.getElementsByClassName("gantt__row gantt__row--months")[0].appendChild(s);
+            document.getElementsByClassName("gantt__row gantt__row--lines")[0].appendChild(document.createElement("span"));
+            
+            dt.setMonth(dt.getMonth() +1);  
+        }
+    }
+
+    function itemsToTimeline() {
+      let now = new Date();
+      let rootHtml = document.getElementsByClassName("gantt")[0];
+
+      for(let k in memory.items) {
+        let xo = memory.items[k];
+
+        let hist = getItemHistory(xo);
+        //console.log(hist);
+        
+        //let startG = 23 + monthDiff(now, new Date(hist.created));
+        
+        let row = document.createElement("div");
+        row.classList.add("gantt__row");
+
+        let tit = document.createElement("div");
+        tit.classList.add("gantt__row-first");
+        tit.innerText = k;
+
+        row.appendChild(tit);
+
+        let bar = document.createElement("ul");
+        bar.classList.add("gantt__row-bars");
+
+        for(i = 0; i < hist.length; i++) {
+            let li = document.createElement("li");
+
+            let col = 24 + monthDiff(now, hist[i][0]);
+            let dur = col + 2; // default value
+            if(i == 0) {
+                // First has stripes, because its cool
+                li.classList.add("stripes");
+            }
+            if(i < hist.length - 1) {
+                dur = 24 + monthDiff(now, hist[i+1][0]);
+                if(i > 0) {
+                    if(col == (24 + monthDiff(now, hist[i-1][0])))
+                        continue; // Skip because i'm just on top of the old status (filter)
+                }
+                // Check my duration against next item
+                
+            }
+            if(i == hist.length -1) {
+                // Last item, stretch it out
+                dur = 24;
+            }
+            if(hist[i][1] == "Explore solutions") li.style.backgroundColor = "#2ecaac";
+            if(hist[i][1] == "Development Lifecycle") li.style.backgroundColor = "#099b39";
+
+            li.style.gridColumn = col + "/" + dur;
+            li.innerText = hist[i][1];
+            li.title = hist[i][0];
+            bar.appendChild(li);
+        }
+
+
+        row.appendChild(bar);
+        rootHtml.appendChild(row);
+      }
+        /*
+        <div class="gantt__row gantt__row--empty">
+                <div class="gantt__row-first">
+                    Hobard Lampitt
+                </div>
+                <ul class="gantt__row-bars"></ul>
+            </div>*/
+
+            /*
+            <div class="gantt__row">
+                <div class="gantt__row-first">
+                    Virgilio Jeanes
+                </div>
+                <ul class="gantt__row-bars">
+                    <li style="grid-column: 2/5; background-color: #2ecaac;"></li>
+                </ul>
+            </div>*/
+    }
+
+    function getItemHistory(item) {
+        let hList = item.changelog.histories;
+        let dArr = [[
+            new Date(item.fields.created), 'Created'
+        ]];
+
+        for(i = 0; i < hList.length; i++) {
+          let dt = new Date(hList[i].created);
+          for(j = 0; j < hList[i].items.length; j++) {
+              let itm = hList[i].items[j];
+              if(itm.field == "status") {
+                dArr.push([dt, itm.toString]);
+              }
+          }
+        } 
+
+        dArr.sort((a, b) => a[0] - b[0]);
+        //console.log(array);
+
+        return dArr;
+    }
+
+    function parsePased(ev) {
+  //console.log(ev);
+  data = ev.clipboardData.getData("text/plain");
+  jsn  = jsonParse(data);
+  if(jsn) {
+    if(validJiraItem(jsn)) {
+      showError("JSON received ok!");
+      memory.items[jsn.key] = jsn;
+      storeJiraItem(jsn.key, jsn);
+      storeItemIndex();
+      
+      //updateTable();
+    }
+    else {
+      showError("JSON received was not parsed as a valid jira item");
+    }
+  }
+  else {
+    showError("Value pasted was not parsed as valid JSON");
+  }
+  
+  return false;
+}
+
+  </script>
+</head>
+
+<body onpaste="parsePased(event)">
+
+    <div id="toolbar">Context: <select id="ctxSelect" onchange="window.location.href = '?' + this.value;"></select> 
+        | <a id="lnkGrid" href="#">Data Grid</a> | <a id="lnkTime" href="#">Timeline</a></div>
+    <div id="error" style="display:none">&nbsp;</div>
+
+    <div class="wrapper">
+        <div class="header">
+            <h2>Timeline</h2>
+            <p>Description here</p>
+        </div>
+        <div class="gantt">
+            <div class="gantt__row gantt__row--months">
+                <div class="gantt__row-first"></div>
+
+            </div>
+            <div class="gantt__row gantt__row--lines">
+
+            </div>
+            <!--div class="gantt__row">
+                <div class="gantt__row-first">
+                    Barnard Posselt
+                </div>
+                <ul class="gantt__row-bars">
+                    <li style="grid-column: 4/9; background-color: #2ecaac;">Even longer project</li>
+                    <li style="grid-column: 9/10; background-color: #ff6252;">Follow</li>
+                </ul>
+            </div-->
+            <!--div class="gantt__row gantt__row--empty">
+                <div class="gantt__row-first">
+                    Ryley Huggons
+                </div>
+                <ul class="gantt__row-bars"></ul>
+            </div>
+            <div class="gantt__row">
+                <div class="gantt__row-first">
+                    Lanie Erwin
+                </div>
+                <ul class="gantt__row-bars">
+                    <li style="grid-column: 2/5; background-color: #2ecaac;">Start Februar 🙌</li>
+                    <li style="grid-column: 1/6; background-color: #ff6252;" class="stripes"></li>
+                    <li style="grid-column: 7/11; background-color: #54c6f9;">Same line</li>
+                </ul>
+            </div>
+            <div class="gantt__row gantt__row--empty">
+                <div class="gantt__row-first">
+                    Krishnah Pauleit
+                </div>
+                <ul class="gantt__row-bars"></ul>
+            </div>
+            <div class="gantt__row gantt__row--empty">
+                <div class="gantt__row-first">
+                    Hobard Lampitt
+                </div>
+                <ul class="gantt__row-bars"></ul>
+            </div>
+            <div class="gantt__row">
+                <div class="gantt__row-first">
+                    Virgilio Jeanes
+                </div>
+                <ul class="gantt__row-bars">
+                    <li style="grid-column: 2/5; background-color: #2ecaac;"></li>
+                </ul>
+            </div-->
+        </div>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(event) {
+        var query = getQueryParams(document.location.search);
+        if('c' in query) {
+          config = eval(query['c']);
+        }
+        updateContext();
+        loadStore();
+        createTimeline();
+        itemsToTimeline();
+      });
+      </script>
+  </body>
+</html>

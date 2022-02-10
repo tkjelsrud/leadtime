@@ -1,10 +1,8 @@
 <html>
 <head>
+  <link rel="stylesheet" type="text/css" href="common/leadtime.css"></link>
   <style>
-    body {
-      font-family: Verdana;
-      font-size: 10px;
-    }
+
     /*#timeline {
       background-color: #EEE;
     }
@@ -94,17 +92,22 @@
     border-color: transparent transparent transparent #808080; }
   </style>
 
+  <script type="text/javascript" src="common/util.js"></script>
+  <script type="text/javascript" src="common/context.js"></script>
 </head>
 
 <body onpaste="parsePased(event)">
+  <div id="toolbar">Context: <select id="ctxSelect" onchange="window.location.href = '?' + this.value;"></select> 
+    | <a id="lnkGrid" href="#">Data Grid</a> | <a id="lnkTime" href="#">Timeline</a></div>
+
   <div id="error" style="display:none">&nbsp;</div>
-  <!--div id="timeline"></div-->
+  
   <div id="dataGrid"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
 
 <script type="text/javascript">
-var memory = {'items': {}, 'ppl': {}};
+
 
 // Table configuration (keep as dynamic as possible)
 var config = {
@@ -154,13 +157,7 @@ var configStory = {
   
 //"Analysis: 28d 0h 29m, In Progress: 7d 3h 2m, SIT: 6d 20h 58m, UAT: 12d 23h 49m, Ready for production: 16d 4h 30m"
 
-function showError(err) {
-  document.getElementById("error").style.display = "block";
-  document.getElementById("error").innerText += err;
-  
-  //TODO: Handle many messages without beeing hidden too early or messages overwritten
-  setTimeout(function() {document.getElementById("error").style.display = "none";}, 3000);
-}
+
   
 function parsePased(ev) {
   //console.log(ev);
@@ -186,61 +183,8 @@ function parsePased(ev) {
   return false;
 }
   
-function jsonParse(data) {
-  try {
-    jsn = JSON.parse(data);
-  } catch (e) {
-    return null;
-  }
-  return jsn;
-}
   
-function validJiraItem(jsn) {
-  if(!("fields" in jsn)) return false;
-  if(!("changelog" in jsn)) return false;
-  
-  return true;
-}
-
-function getSessionCtx() {
-  return window.location.search;
-}
-  
-function storeJiraItem(jkey, jsn) {
-  localStorage.setItem(jkey, JSON.stringify(jsn));
-}
-  
-function storeItemIndex() {
-  localStorage.setItem("items" + getSessionCtx(), Object.keys(memory.items).join(";"));
-}
-  
-function getApiLink() {
-  let link = localStorage.getItem("apiLink");
-  if(!link)
-    return "#";
-  return link;
-}
-
-function loadStore() {
-  let ind = localStorage.getItem("items" + getSessionCtx());
-  if(!ind)
-    return false;
-  
-  ind = ind.split(";");
-  
-  for(let i = 0; i < ind.length; i++) {
-    let data = localStorage.getItem(ind[i]);
-    let jsn  = jsonParse(data);
-    if(jsn) {
-      if(validJiraItem(jsn)) {
-        memory.items[jsn.key] = jsn;
-        //showError("Loaded " + jsn.key);
-      }
-    }
-  }
-}
-  
-function updateTimeline() {
+/*function updateTimeline() {
   document.getElementById("timeline").innerHTML = "";
   
   for(let k in memory.items) {
@@ -248,7 +192,7 @@ function updateTimeline() {
     let tLine = document.createElement("div");
     document.getElementById("timeline").appendChild(tLine);
   }
-}
+}*/
   
 function updateTable() {
   // Read memory, insert lines
@@ -465,37 +409,14 @@ function jiraFindStories(xo) {
   return {'val': unique};
 }
 
-function onlyUnique(value, index, self) {
-  return self.indexOf(value) === index;
-}
-  
-function shortDate(dateStr) {
-  return (new Date(dateStr)).toLocaleDateString('no-nb'); 
-}
-  
-function getColor(value){
-  //value from 0 to 1
-  var hue=((1-value)*120).toString(10);
-  return ["hsl(",hue,",100%,50%)"].join("");
-}
-  
-function getQueryParams(qs) {
-  qs = qs.split('+').join(' ');
-  var params = {},
-        tokens,
-        re = /[?&]?([^=]+)=([^&]*)/g;
-  while (tokens = re.exec(qs)) {
-    params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-  }
 
-  return params;
-}
   
 document.addEventListener("DOMContentLoaded", function(event) {
   var query = getQueryParams(document.location.search);
   if('c' in query) {
     config = eval(query['c']);
   }
+  updateContext();
   loadStore();
   updateTable();
 

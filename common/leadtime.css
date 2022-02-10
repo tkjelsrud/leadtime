@@ -1,0 +1,12 @@
+body {
+    font-family: Verdana;
+    font-size: 10px;
+    margin: 0;
+  }
+  #toolbar {
+    width: 100%;
+    background-color: #CCC;
+    padding: 4px;
+    padding-bottom: 6px;
+    filter: drop-shadow(3px 0px 3px grey);
+  }
