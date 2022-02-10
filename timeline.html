@@ -154,7 +154,7 @@
 <body onpaste="parsePased(event)">
 
     <div id="toolbar">Context: <select id="ctxSelect" onchange="window.location.href = '?' + this.value;"></select> 
-        | <a id="lnkGrid" href="#">Data Grid</a> | <a id="lnkTime" href="#">Timeline</a></div>
+        | <a id="lnkGrid" href="#">Data Grid</a> | <a id="lnkTime" href="#">Timeline</a>  | <a id="lnkRead" href="#">Readme</a></div>
     <div id="error" style="display:none">&nbsp;</div>
 
     <div class="wrapper">
@@ -223,7 +223,7 @@
         if('c' in query) {
           config = eval(query['c']);
         }
-        
+
         addCtxToKnownList();
         updateContext();
         loadStore();

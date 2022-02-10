@@ -25,6 +25,7 @@ function showError(err) {
     
     document.getElementById("lnkGrid").href = "index.html?" + getSessionCtx();
     document.getElementById("lnkTime").href = "timeline.html?" + getSessionCtx();
+    document.getElementById("lnkRead").href = "readme.html?" + getSessionCtx();
   }
 
   function getSessionCtx() {
@@ -50,9 +51,6 @@ function showError(err) {
           cList.push(ctx);
           localStorage.setItem("ctxList", cList.join(','));
         }
-        // Iterate and find it there?
-        // TODO fix this
-        // fruits.includes("Mango");
       }
     }
   }

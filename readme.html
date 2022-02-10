@@ -1,0 +1,35 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="common/leadtime.css"></link>
+  <script type="text/javascript" src="common/util.js"></script>
+  <script type="text/javascript" src="common/context.js"></script>
+</head>
+
+<body>
+  <div id="toolbar">Context: <select id="ctxSelect" onchange="window.location.href = '?' + this.value;"></select> 
+    | <a id="lnkGrid" href="#">Data Grid</a> | <a id="lnkTime" href="#">Timeline</a>  | <a id="lnkRead" href="#">Readme</a></div>
+
+    <div id="readme">
+        <h2>Jira parsing and visualization script</h2>
+        <p>Open source web front end for visualizing data from jira</p>
+        <h2>On security</h2>
+        <p>This script does not share any company, classified or otherwise personal information with the developer nor Github. This front-end script has no back-end connection towards any instance of jira. Nor does it share information you place into it with any backend or service (github, etc). All data visualized on the pages are stored in "localStorage" and resides within the limits of the web browser you are using (similar to cookies). The reports and visualizations cannot be shared (except by taking a screen shot).</p>
+        <p>Disclaimer: localstorage used for temporarily storing data in this script can be lost and cannot be considered fully secure by any means. Developer cannot be held liable for the limitations or known weaknesses of this method.</p>
+        <h2>How to use</h2>
+        <p>This script requires you to supply JSON (data) from Jira, through copy-paste, into the grid or timeline view. Upon receiving JSON data in the expected format, the data will be populated to the visualization.</p>
+        <p>Typically this is done by accessing JIRA API, example: https://JIRA-HOST-URL/rest/api/latest/issue/ISSUEKEY?expand=changelog</p>
+        <p>If the JIRA API URL does not supply data, it can be a login-issue, access normal jira and browse 1 item, if this works, accessing the API should then start working. API is giving the exact same data as normal usage of JIRA and should not require any special privileges or access.</p>
+        <p>In this example, both the JIRA-HOST-URL and the ISSUEKEY needs to be changed to the correct values. Once this initial step is done, you can re-use the fetching of data to quickly populate the visualizations here.</p>
+        <p>When you get a data dump through the supplied URL, select all of the text (Ctrl+A) then copy it (Ctrl+C) and paste it into the grid or timeline view in this script (Ctrl+V) and it should acknowledge. If timelines do not update, please reload the page (Ctrl+R).</p>
+        <h2>About script</h2>
+        <p>Open source and accesible here: <a href="https://github.com/tkjelsrud/leadtime">https://github.com/tkjelsrud/leadtime</a></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+
+            updateContext();
+        });
+    </script>
+</body>
+</html>
