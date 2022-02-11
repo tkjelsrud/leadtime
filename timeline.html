@@ -52,12 +52,20 @@
             let li = document.createElement("li");
 
             let col = 24 + monthDiff(now, hist[i][0]);
-            let dur = col + 2; // default value
+            let dur = col + 1;
+            
+            if(hist[i][2] != null)
+                dur = 24 + monthDiff(now, hist[i][2]);
+
             if(i == 0) {
                 // First has stripes, because its cool
                 li.classList.add("stripes");
             }
-            if(i < hist.length - 1) {
+            if(i > 0 && col == dur) {
+                // Hide, spam status
+                continue;
+            }
+            /*if(i < hist.length - 1) {
                 dur = 24 + monthDiff(now, hist[i+1][0]);
                 if(i > 0) {
                     if(col == (24 + monthDiff(now, hist[i-1][0])))
@@ -65,7 +73,7 @@
                 }
                 // Check my duration against next item
                 
-            }
+            }*/
             if(i == hist.length -1) {
                 // Last item, stretch it out
                 dur = 24;
@@ -105,7 +113,7 @@
     function getItemHistory(item) {
         let hList = item.changelog.histories;
         let dArr = [[
-            new Date(item.fields.created), 'Created'
+            new Date(item.fields.created), 'Created', null
         ]];
 
         for(i = 0; i < hList.length; i++) {
@@ -113,13 +121,16 @@
           for(j = 0; j < hList[i].items.length; j++) {
               let itm = hList[i].items[j];
               if(itm.field == "status") {
-                dArr.push([dt, itm.toString]);
+                dArr.push([dt, itm.toString, null]);
               }
           }
         } 
 
         dArr.sort((a, b) => a[0] - b[0]);
-        //console.log(array);
+        // Add end date to each item
+        for(i = 0; i < (dArr.length - 1); i++) {
+            dArr[i][2] = dArr[i+1][0];
+        }
 
         return dArr;
     }
