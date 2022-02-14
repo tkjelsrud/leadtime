@@ -53,7 +53,7 @@
 
             let col = 24 + monthDiff(now, hist[i][0]);
             let dur = col + 1;
-            
+
             if(hist[i][2] != null)
                 dur = 24 + monthDiff(now, hist[i][2]);
 
@@ -76,7 +76,7 @@
             }*/
             if(i == hist.length -1) {
                 // Last item, stretch it out
-                dur = 24;
+                dur = 25;
             }
             if(hist[i][1] == "Explore solutions") li.style.backgroundColor = "#2ecaac";
             if(hist[i][1] == "Development Lifecycle") li.style.backgroundColor = "#099b39";

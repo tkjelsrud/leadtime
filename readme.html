@@ -15,6 +15,9 @@
         <h2>On security</h2>
         <p>This script does not share any company, classified or otherwise personal information with the developer nor Github. This front-end script has no back-end connection towards any instance of jira. Nor does it share information you place into it with any backend or service (github, etc). All data visualized on the pages are stored in "localStorage" and resides within the limits of the web browser you are using (similar to cookies). The reports and visualizations cannot be shared (except by taking a screen shot).</p>
         <p>Disclaimer: localstorage used for temporarily storing data in this script can be lost and cannot be considered fully secure by any means. Developer cannot be held liable for the limitations or known weaknesses of this method.</p>
+        <h2>Data storage</h2>
+        <p>Data is stored in the browser and should be accessible the next time you open the page (within the same browser). Resets of cache data can clear the data.</p>
+        <p>Data is not updates because jira is updates, you have to copy/paste new data when required (pasting the same jira item will overwrite with new data). Consider the visualiation a snapshot in time.</p>
         <h2>How to use</h2>
         <p>This script requires you to supply JSON (data) from Jira, through copy-paste, into the grid or timeline view. Upon receiving JSON data in the expected format, the data will be populated to the visualization.</p>
         <p>Typically this is done by accessing JIRA API, example: https://JIRA-HOST-URL/rest/api/latest/issue/ISSUEKEY?expand=changelog</p>
