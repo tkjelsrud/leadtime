@@ -27,6 +27,15 @@ html {
   padding: 4px;
 }
 
+.rowLabel {
+  position: absolute;
+  font-size: 14px;
+  font-style: italic;
+  color: grey;
+  padding-left: 70px;
+  padding-top: 12px;
+}
+
 .gantt {
   display: grid;
   border: 0;

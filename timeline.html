@@ -87,6 +87,11 @@
             bar.appendChild(li);
         }
 
+        let lab = document.createElement("div");
+        lab.classList.add("rowLabel");
+        
+        lab.innerText = xo.fields.summary;
+        row.appendChild(lab);
 
         row.appendChild(bar);
         rootHtml.appendChild(row);
