@@ -1,14 +1,4 @@
 
-@import url("https://fonts.googleapis.com/css?family=Roboto:100,400,700");
-/*body,
-html {
-  font-family: "Roboto", sans-serif;
-  background-color: #cddade;
-  height: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}*/
-
 .header {
   color: #202125;
   margin-bottom: 10px;
@@ -32,7 +22,7 @@ html {
   font-size: 14px;
   font-style: italic;
   color: grey;
-  padding-left: 70px;
+  padding-left: 62px;
   padding-top: 12px;
 }
 

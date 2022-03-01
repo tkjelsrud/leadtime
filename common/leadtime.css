@@ -1,12 +1,20 @@
-body {
-    font-family: Verdana;
-    font-size: 10px;
-    margin: 0;
-  }
-  #toolbar {
-    width: 100%;
-    background-color: #CCC;
-    padding: 4px;
-    padding-bottom: 6px;
-    filter: drop-shadow(3px 0px 3px grey);
-  }
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,400,700");
+
+body,
+html {
+  font-family: "Roboto", sans-serif;
+  /*background-color: #cddade;*/
+  height: 100%;
+  font-size: 10px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+#toolbar {
+  width: 100%;
+  background-color: #CCC;
+  padding: 4px;
+  padding-bottom: 6px;
+  filter: drop-shadow(3px 0px 3px grey);
+}
