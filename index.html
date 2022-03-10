@@ -33,7 +33,7 @@
       vertical-align: top;
     }
     tr:hover {
-      background-color:#82aaba;
+      border-bottom:1px solid #82aaba !important;
     }
     tr:nth-child(even) {background-color: #EEE}
     .narrow {
@@ -116,7 +116,7 @@
 var config = {
   'filters': ["xo.fields.issuetype.name=='Epic'"],
   'columns': [
-    {'title': "Key", 'eval': "xo.key + drawHideLink(xo.key)", 'class': 'narrow', 'style': 'apiLink'},
+    {'title': "Key", 'eval': "xo.key", 'class': 'narrow', 'style': 'apiLink'},
     {'title': "Title", 'eval': "xo.fields.summary"},
     {'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'},
     {'title': "TFam", 'eval': "jiraTechFamilies(xo)", 'class': 'narrow'},
@@ -242,9 +242,6 @@ function updateTable() {
   //generateTableSummary(table, config.columns);
 }
 
-function drawHideLink(key) {
-  return " <a href=\"javascript:hide('" + key + "');\">hide</a>"
-}
   
 function generateTableHead(table, columns) {
   let thead = table.createTHead();
