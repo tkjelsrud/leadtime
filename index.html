@@ -32,7 +32,10 @@
       font-size: 10px;
       vertical-align: top;
     }
-    tr:nth-child(even) {background: #EEE}
+    tr:hover {
+      background-color:#82aaba;
+    }
+    tr:nth-child(even) {background-color: #EEE}
     .narrow {
       width: 80px;
     }
@@ -113,7 +116,7 @@
 var config = {
   'filters': ["xo.fields.issuetype.name=='Epic'"],
   'columns': [
-    {'title': "Key", 'eval': "xo.key", 'class': 'narrow', 'style': 'apiLink'},
+    {'title': "Key", 'eval': "xo.key + drawHideLink(xo.key)", 'class': 'narrow', 'style': 'apiLink'},
     {'title': "Title", 'eval': "xo.fields.summary"},
     {'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'},
     {'title': "TFam", 'eval': "jiraTechFamilies(xo)", 'class': 'narrow'},
@@ -237,6 +240,10 @@ function updateTable() {
   }
   
   //generateTableSummary(table, config.columns);
+}
+
+function drawHideLink(key) {
+  return " <a href=\"javascript:hide('" + key + "');\">hide</a>"
 }
   
 function generateTableHead(table, columns) {

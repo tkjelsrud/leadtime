@@ -115,6 +115,16 @@
             </div>*/
     }
 
+    function itemToolbarHtml(item) {
+        // Create various buttons for adjusting the item in view
+        // Hide item (can be viewed again, link at bottom)
+        // Jira link (straight to api for re-fetch)
+        let html = "<img src=\"images/icon-api.png\" style=\"width:16px;height:16px\" />";
+
+
+        return html;
+    }
+
     function getItemHistory(item) {
         let hList = item.changelog.histories;
         let dArr = [[
