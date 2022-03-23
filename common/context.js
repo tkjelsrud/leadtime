@@ -106,3 +106,9 @@ function loadStore() {
     }
   }
 }
+
+function deleteStoreKey(key) {
+  localStorage.removeItem(key);
+  delete memory.items[key];
+  storeItemIndex();
+}

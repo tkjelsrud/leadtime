@@ -12,6 +12,8 @@
       border: 1px solid grey;
       filter: drop-shadow(6px 6px 6px grey);
     }*/
+    #toolbar {
+    }
     #dataGrid {
       /*font-size: 9px !important;*/
       background-color: #FFF;
@@ -20,6 +22,9 @@
   	#error {
       color: red; 
       background-color: #DDD;
+    }
+    #selected {
+      padding-left: 60px;
     }
     th {
       text-align: left;
@@ -33,7 +38,7 @@
       vertical-align: top;
     }
     tr:hover {
-      border-bottom:1px solid #82aaba !important;
+      background-color: #82aaba !important;
     }
     tr:nth-child(even) {background-color: #EEE}
     .narrow {
@@ -101,9 +106,13 @@
 
 <body onpaste="parsePased(event)">
   <div id="toolbar">Context: <select id="ctxSelect" onchange="window.location.href = '?' + this.value;"></select> 
-    | <a id="lnkGrid" href="#">Data Grid</a> | <a id="lnkTime" href="#">Timeline</a>  | <a id="lnkRead" href="#">Readme</a></div>
+    | <a id="lnkGrid" href="#">Data Grid</a> | <a id="lnkTime" href="#">Timeline</a>  | <a id="lnkRead" href="#">Readme</a>
+    | <span id="selected" style="display:none">&nbsp;</span>
+  </div>
 
   <div id="error" style="display:none">&nbsp;</div>
+
+  
   
   <div id="dataGrid"></div>
 
@@ -133,7 +142,8 @@ var config = {
     {'title': "LT SH", 'eval': "jiraEpicLeadtime(xo, 'Specify How')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "LT DL", 'eval': "jiraEpicLeadtime(xo, 'Development Lifecycle')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
     {'title': "ELinks", 'eval': "jiraEpicLinks(xo).val.split(' ').length", 'class': "narrownum"},
-    {'title': "Rel stories", 'eval': "jiraFindStories(xo).val.length", 'class': "narrownum"}
+    {'title': "Rel stories", 'eval': "jiraFindStories(xo).val.length", 'class': "narrownum"},
+    {'title': "Data age", 'eval': "Math.floor(((new Date()) - new Date(xo.storeDate)) / (1000*60*60*24)) + 'd'", 'class': "narrownum"}
   ]
 };
   
@@ -169,6 +179,7 @@ function parsePased(ev) {
   if(jsn) {
     if(validJiraItem(jsn)) {
       showError("JSON received ok!");
+      jsn['storeDate'] = new Date();
       memory.items[jsn.key] = jsn;
       storeJiraItem(jsn.key, jsn);
       storeItemIndex();
@@ -258,11 +269,16 @@ function generateTableHead(table, columns) {
   
 function generateTableRow(table, rowData, columns) {
   let row = table.insertRow();
+  row.addEventListener("click", function(event) {
+    handleClick(event.target);
+  });
   for(let i = 0; i < rowData.length; i++) {
     let cell = row.insertCell();
     let val = ((Array.isArray(rowData[i]) || typeof rowData[i] === 'object') ? rowData[i].val : rowData[i]);
     let cval = document.createTextNode("" + val);
     
+    // Set the row id based on first value (key)
+    if(i == 0) row.id = val;
     //if(typeof rowData[i] === 'object' && 'tip' in rowData[i])
     //  cval.setAttribute("title", rowData[i].tip);
     
@@ -281,6 +297,22 @@ function generateTableRow(table, rowData, columns) {
     //cval.innerHTML = 
     cell.appendChild(cval);
   }
+}
+
+function handleClick(target) {
+  let row = target.parentElement;
+  let key = row.cells[0].textContent;
+  document.getElementById("selected").style.display = "";
+  document.getElementById("selected").innerHTML = key + " <a href=\"javascript:hideData('" + key + "');\">Hide data</a> <a href=\"javascript:deleteStoreKey('" + key + "');\">Delete data</a>"
+}
+
+function hideData(key) {
+  let row = keyToTableRow(key);
+  row.style.display = "none";
+}
+
+function keyToTableRow(key) {
+  return document.getElementById(key);
 }
   
 function jiraSocialCount(xo) {
@@ -412,8 +444,6 @@ function jiraFindStories(xo) {
   
   return {'val': unique};
 }
-
-
   
 document.addEventListener("DOMContentLoaded", function(event) {
   var query = getQueryParams(document.location.search);

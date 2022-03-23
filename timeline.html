@@ -52,16 +52,20 @@
             let li = document.createElement("li");
 
             let col = 24 + monthDiff(now, hist[i][0]);
+            
             let dur = col + 1;
 
             if(hist[i][2] != null)
                 dur = 24 + monthDiff(now, hist[i][2]);
 
+            //console.log(i + " " + hist[i][1] + ": " + col + " " + dur + hist[i][0]);
+
             if(i == 0) {
                 // First has stripes, because its cool
                 li.classList.add("stripes");
             }
-            if(i > 0 && col == dur) {
+            //if(i == 0 && dur == col)
+            if(i >= 0 && col == dur) {
                 // Hide, spam status
                 continue;
             }
