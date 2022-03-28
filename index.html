@@ -290,7 +290,7 @@ function generateTableRow(table, rowData, columns) {
     if('class' in columns[i]) {
       if(columns[i].class == "edit") {
         cell.setAttribute('contentEditable', 'true');
-        cell.setAttribute('onblur', 'alert("save time");');
+        cell.setAttribute('onblur', 'saveFieldChange(this,' + coumns[i].eval + ');');
       }
     }
 
@@ -340,6 +340,12 @@ function jiraSocialCount(xo) {
   storePpl(ppl); // also remember across all epics
 
   return {'val': "ppl:" + Object.keys(ppl).length + " cmt:" + xo.fields.comment.total, 'tip': ppl}
+}
+
+function saveFieldChange(event, field) {
+  // TODO: fix this
+  console.log(event);
+  console.log(field);
 }
   
 function incrVal(arr, val) {
