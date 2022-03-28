@@ -43,6 +43,10 @@
     tr:nth-child(even) {background-color: #EEE}
     .narrow {
       width: 80px;
+      word-break: break-all;
+    }
+    .edit {
+      background-color: yellow;
     }
     .narrownum {
       width: 30px; 
@@ -127,7 +131,8 @@ var config = {
   'columns': [
     {'title': "Key", 'eval': "xo.key", 'class': 'narrow', 'style': 'apiLink'},
     {'title': "Title", 'eval': "xo.fields.summary"},
-    {'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'},
+    //{'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'},
+    {'title': "Note", 'eval': "xo.note", 'class': 'edit'},
     {'title': "TFam", 'eval': "jiraTechFamilies(xo)", 'class': 'narrow'},
     {'title': "Status", 'eval': "xo.fields.status.name", 'class': 'narrow'},
    // {'title': "Reporter", 'eval': "xo.fields.reporter.emailAddress", 'class': 'narrow'},
@@ -292,6 +297,9 @@ function generateTableRow(table, rowData, columns) {
       }
       if(columns[i].style == "apiLink") {
         cell.setAttribute('onclick', 'window.open("' + getApiLink() + val + '?expand=changelog", "_blank");');
+      }
+      if(columns[i].style == "edit") {
+        cell.contentEditable = true;
       }
     }
     //let cval = document.createElement('div');
