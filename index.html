@@ -287,7 +287,13 @@ function generateTableRow(table, rowData, columns) {
     if(i == 0) row.id = val;
     //if(typeof rowData[i] === 'object' && 'tip' in rowData[i])
     //  cval.setAttribute("title", rowData[i].tip);
-    
+    if('class' in columns[i]) {
+      if(columns[i].class == "edit") {
+        cell.setAttribute('contentEditable', 'true');
+        cell.setAttribute('onblur', 'alert("save time");');
+      }
+    }
+
     if('style' in columns[i]) {
       if(columns[i].style == "dayScale" || val) {
         //console.log(cval);
@@ -297,10 +303,6 @@ function generateTableRow(table, rowData, columns) {
       }
       if(columns[i].style == "apiLink") {
         cell.setAttribute('onclick', 'window.open("' + getApiLink() + val + '?expand=changelog", "_blank");');
-      }
-      if(columns[i].style == "edit") {
-        cell.setAttribute('contentEditable', 'true');
-        cell.setAttribute('onblur', 'alert("save time");');
       }
     }
     //let cval = document.createElement('div');
