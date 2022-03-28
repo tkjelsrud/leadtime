@@ -299,7 +299,8 @@ function generateTableRow(table, rowData, columns) {
         cell.setAttribute('onclick', 'window.open("' + getApiLink() + val + '?expand=changelog", "_blank");');
       }
       if(columns[i].style == "edit") {
-        cell.contentEditable = true;
+        cell.setAttribute('contentEditable', 'true');
+        cell.setAttribute('onblur', 'alert("save time");');
       }
     }
     //let cval = document.createElement('div');
