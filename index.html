@@ -132,7 +132,7 @@ var config = {
     {'title': "Key", 'eval': "xo.key", 'class': 'narrow', 'style': 'apiLink'},
     {'title': "Title", 'eval': "xo.fields.summary"},
     //{'title': "Type", 'eval': "xo.fields.issuetype.name", 'class': 'narrow'},
-    {'title': "Note", 'eval': "xo.note", 'class': 'edit'},
+    {'title': "Note", 'eval': "xo.note", 'class': 'edit', 'saveTo': 'note'},
     {'title': "TFam", 'eval': "jiraTechFamilies(xo)", 'class': 'narrow'},
     {'title': "Status", 'eval': "xo.fields.status.name", 'class': 'narrow'},
    // {'title': "Reporter", 'eval': "xo.fields.reporter.emailAddress", 'class': 'narrow'},
@@ -290,7 +290,7 @@ function generateTableRow(table, rowData, columns) {
     if('class' in columns[i]) {
       if(columns[i].class == "edit") {
         cell.setAttribute('contentEditable', 'true');
-        cell.setAttribute('onblur', 'saveFieldChange(this,' + coumns[i].eval + ');');
+        cell.setAttribute('onblur', 'saveFieldChange("' + row.id + '","' + columns[i].saveTo + '",this);');
       }
     }
 
@@ -342,10 +342,12 @@ function jiraSocialCount(xo) {
   return {'val': "ppl:" + Object.keys(ppl).length + " cmt:" + xo.fields.comment.total, 'tip': ppl}
 }
 
-function saveFieldChange(event, field) {
+function saveFieldChange(id, field, event) {
   // TODO: fix this
-  console.log(event);
-  console.log(field);
+  let text = event.innerText;
+  memory.items[id][field] = text;
+  //console.log(id +" " + field + " " + text);
+  storeJiraItem(id, memory.items[id]);
 }
   
 function incrVal(arr, val) {
