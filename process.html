@@ -1,0 +1,153 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="common/leadtime.css"></link>
+  <link rel="stylesheet" type="text/css" href="common/gantt.css"></link>
+  <style>
+      .node {
+          position:absolute;
+          cursor:grabbing;
+          padding: 4px;
+      }
+      .bar {
+          height: 0px;
+          padding-left: 4px;
+          padding-right: 4px;
+          background-color: red;
+          color: white;
+      }
+  </style>
+  <script type="text/javascript" src="common/util.js"></script>
+  <script type="text/javascript" src="common/context.js"></script>
+  <script type="text/javascript">
+      memory = {'items': [], 'filters': [
+        {'id':'filt_1', 'x': 100, 'y': 100, 'title': 'ES', 'pre': 'item.fields.status.name=="Explore solutions"', 'match': 0, 'leadtime': 'Explore solutions', 'leadtimeData': []},
+        {'id':'filt_2', 'x': 200, 'y': 100, 'title': 'SH', 'pre': 'item.fields.status.name=="Specify How"', 'match': 0, 'leadtime': 'Specify How', 'leadtimeData': []},
+      ]}
+
+      function parsePased(ev) {
+          //
+          // works by parsing a JSON rest result from filter-search
+          // example: https://JIRASERVER/rest/api/2/search?jql=filter=20315&maxResults=100
+          //
+        data = ev.clipboardData.getData("text/plain");
+        jsn  = jsonParse(data);
+
+        if(jsn) {
+            if(jsn.issues && jsn.issues.length > 0) {
+                memory.items = jsn.issues;
+                populateFilters();
+
+                for(let j = 0; j < memory.filters.length; j++) {
+                    filt = memory.filters[j];
+                    document.getElementById(filt.id).children[0].innerText = filt.title;
+                    document.getElementById(filt.id).style.top = filt.y;
+                    document.getElementById(filt.id).style.left = filt.x;
+                    document.getElementById(filt.id).children[2].innerText = filt.leadtimeData.toString();
+                }
+            }
+            else {
+                // Did not find any epics/issues in pasted data
+            }
+        }
+
+        // customfield_12415-val leadtime
+        // customfield_13526 affected service (bunch of id's)
+        // customfield_13409 t-shirt size
+
+      }
+
+      function populateFilters(items) {
+          // Take the list of received stories/items and match them to the on-screen filters
+        for(let i = 0; i < memory.items.length; i++) {
+            var item = memory.items[i];
+
+            for(let j = 0; j < memory.filters.length; j++) {
+                filt = memory.filters[j];
+                el = document.getElementById(filt.id);
+                re = eval(filt.pre);
+                
+                if(re) {
+                    console.log("match");
+                    filt.match++;
+                    el.children[1].innerText = filt.match;
+                    el.children[1].style.height = filt.match * 10;
+                    if(filt.leadtime) {
+                        parseLeadtime(filt, item);
+                    }
+                }
+            }
+        }
+      }
+
+      function parseLeadtime(filt, item) {
+        let lt = item.fields.customfield_12415;
+        let ltArr = lt.split(", ");
+        for(let k = 0; k < ltArr.length; k++) {
+            let keyVal = ltArr[k].split(": ");
+            if(keyVal[0] == filt.leadtime) {
+                filt.leadtimeData.push(keyVal[1]);
+            }
+
+        }
+      }
+
+
+      </script>
+
+    </head>
+
+    <body onpaste="parsePased(event)">
+        <div id="filt_1" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">.</div></div>
+        <div id="filt_2" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">.</div></div>
+
+        <script type="text/javascript">
+      // Make the DIV element draggable:
+
+      const collection = document.getElementsByClassName("node");
+for (let i = 0; i < collection.length; i++) {
+  dragElement(collection[i]);
+}
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+        </script>
+    </body>
+</html>
