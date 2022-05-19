@@ -3,6 +3,16 @@
   <link rel="stylesheet" type="text/css" href="common/leadtime.css"></link>
   <link rel="stylesheet" type="text/css" href="common/gantt.css"></link>
   <style>
+    body, table {
+      font-size: 10px;
+    }
+    th {
+      background-color: #DDD;
+    }
+    #title {
+      font-weight: bold;
+      font-size: 16px;
+    }
       .node {
           position:absolute;
           cursor:grabbing;
@@ -12,16 +22,22 @@
           height: 0px;
           padding-left: 4px;
           padding-right: 4px;
+          max-width: 24px;
           background-color: red;
           color: white;
+      }
+      .leadtime {
+        font-size: 10px;
       }
   </style>
   <script type="text/javascript" src="common/util.js"></script>
   <script type="text/javascript" src="common/context.js"></script>
   <script type="text/javascript">
-      memory = {'items': [], 'filters': [
-        {'id':'filt_1', 'x': 100, 'y': 100, 'title': 'ES', 'pre': 'item.fields.status.name=="Explore solutions"', 'match': 0, 'leadtime': 'Explore solutions', 'leadtimeData': []},
-        {'id':'filt_2', 'x': 200, 'y': 100, 'title': 'SH', 'pre': 'item.fields.status.name=="Specify How"', 'match': 0, 'leadtime': 'Specify How', 'leadtimeData': []},
+      memory = {'items': [], 'leadTimeData': [], 'leadTimeSum': {}, 'filters': [
+        {'id':'filt_1', 'x': 100, 'y': 100, 'title': 'VD', 'pre': 'item.fields.status.name=="Value Definition"', 'match': 0, 'leadTime': "Value Definition"},
+        {'id':'filt_2', 'x': 300, 'y': 100, 'title': 'ES', 'pre': 'item.fields.status.name=="Explore solutions"', 'match': 0, 'leadTime': "Explore solutions"},
+        {'id':'filt_3', 'x': 500, 'y': 100, 'title': 'SH', 'pre': 'item.fields.status.name=="Specify How"', 'match': 0, 'leadTime': "Specify How"},
+        {'id':'filt_4', 'x': 700, 'y': 100, 'title': 'DL', 'pre': 'item.fields.status.name=="Development Lifecycle"', 'match': 0, 'leadTime': "Development Lifecycle"}
       ]}
 
       function parsePased(ev) {
@@ -36,14 +52,38 @@
             if(jsn.issues && jsn.issues.length > 0) {
                 memory.items = jsn.issues;
                 populateFilters();
+                populateLeadTime(); //Second pass, ineffective?
+                let sumLt = 0;
 
                 for(let j = 0; j < memory.filters.length; j++) {
                     filt = memory.filters[j];
-                    document.getElementById(filt.id).children[0].innerText = filt.title;
-                    document.getElementById(filt.id).style.top = filt.y;
-                    document.getElementById(filt.id).style.left = filt.x;
-                    document.getElementById(filt.id).children[2].innerText = filt.leadtimeData.toString();
+                    let elem = document.getElementById(filt.id);
+                    elem.children[0].innerText = filt.title;
+                    elem.style.top = filt.y;
+                    elem.style.left = filt.x;
+
+                    // TODO: Show only leadtime associated with phase
+                    // leadTimeToTable(elem.children[2], filt.leadtimeData);
+                    let ltArr = {};
+                    for(let i = 0; i < memory.leadTimeData.length; i++) {
+                      if(filt.leadTime in memory.leadTimeData[i]) {
+                        let lt = memory.leadTimeData[i][filt.leadTime];
+                        if(lt.endsWith('d')) {
+                          let si = memory.leadTimeData[i].size;
+                          //console.log(parseInt(lt) + " " + si);
+                          if(si in ltArr)
+                            ltArr[si].push(parseInt(lt));
+                          else
+                            ltArr[si] = [parseInt(lt)];
+                        }
+                      }
+                    }
+                    //console.log(ltArr);
+                    let sum = leadTimeToTable(elem.children[2], ltArr);
+                    sumLt += Math.round(sum.avg);
+                    document.getElementById("summary").innerText += " " + filt.title + ":" + Math.round(sum.avg);
                 }
+                document.getElementById("summary").innerText += " avgSum=" + sumLt;
             }
             else {
                 // Did not find any epics/issues in pasted data
@@ -56,7 +96,7 @@
 
       }
 
-      function populateFilters(items) {
+      function populateFilters() {
           // Take the list of received stories/items and match them to the on-screen filters
         for(let i = 0; i < memory.items.length; i++) {
             var item = memory.items[i];
@@ -67,38 +107,106 @@
                 re = eval(filt.pre);
                 
                 if(re) {
-                    console.log("match");
                     filt.match++;
                     el.children[1].innerText = filt.match;
-                    el.children[1].style.height = filt.match * 10;
-                    if(filt.leadtime) {
-                        parseLeadtime(filt, item);
-                    }
+                    el.children[1].style.height = filt.match * 2;
                 }
             }
         }
       }
 
-      function parseLeadtime(filt, item) {
-        let lt = item.fields.customfield_12415;
-        let ltArr = lt.split(", ");
-        for(let k = 0; k < ltArr.length; k++) {
-            let keyVal = ltArr[k].split(": ");
-            if(keyVal[0] == filt.leadtime) {
-                filt.leadtimeData.push(keyVal[1]);
-            }
+      function populateLeadTime() {
+        //memory.leadTimeData
+        for(let i = 0; i < memory.items.length; i++) {
+            var item = memory.items[i];
 
+            let ltArr = parseLeadtime(item);
+            let si = (item.fields.customfield_13409 ? item.fields.customfield_13409.value : "unknown");
+            ltArr['size'] = si;
+            ltArr['key'] = item.key;
+            memory.leadTimeData.push(ltArr);
         }
       }
 
+      function parseLeadtime(item) {
+        let lt = item.fields.customfield_12415;
+        let res = {};
+        let ltArr = lt.split(", ");
+
+        for(let k = 0; k < ltArr.length; k++) {
+            let keyVal = ltArr[k].split(": ");
+            res[keyVal[0]] = keyVal[1];
+        }
+        return res;
+      }
+
+      function leadTimeToTable(elem, ltData) {
+        let tbl = document.createElement("table");
+        let rowHead = document.createElement("tr");
+        // my god, bloated code
+        let cHead = document.createElement("th");
+        cHead.innerText = "Leadtime";
+        let cHead2 = document.createElement("th");
+        cHead2.innerText = "avg";
+        let cHead3 = document.createElement("th");
+        cHead3.innerText = "max";
+        rowHead.appendChild(cHead);
+        rowHead.appendChild(cHead2);
+        rowHead.appendChild(cHead3);
+        tbl.appendChild(rowHead);
+        let sum = {'all': [], 'max': 0, 'avg': 0};
+
+        for(let sizeKey in ltData) {
+          // table row creation
+          let row = document.createElement("tr");
+          let lt = {'all': [], 'max': 0, 'avg': 0}
+          for (let i = 0; i < ltData[sizeKey].length; i++) {
+            let val = ltData[sizeKey][i];
+            if(val > 0) { // Skip zero values
+              lt.all.push(val);
+              sum.all.push(val);
+              if(val > lt.max) lt.max = val;
+              if(val > sum.max) sum.max = val;
+            }
+          }
+
+          lt.avg = lt.all.reduce((a, b) => a + b, 0) / lt.all.length;
+          sum.avg = sum.all.reduce((a, b) => a + b, 0) / sum.all.length
+
+          let cell = document.createElement("td");
+          cell.innerText = sizeKey;
+          row.appendChild(cell);
+
+          let cellAvg = document.createElement("td");
+          cellAvg.innerText = Math.round(lt.avg);
+          row.appendChild(cellAvg);
+
+          let cellMax = document.createElement("td");
+          cellMax.innerText = lt.max;
+          row.appendChild(cellMax);
+
+          tbl.appendChild(row);
+        }
+
+
+        // Summary
+
+        elem.appendChild(tbl);
+
+        return sum;
+      }
 
       </script>
 
     </head>
 
     <body onpaste="parsePased(event)">
-        <div id="filt_1" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">.</div></div>
-        <div id="filt_2" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">.</div></div>
+        <div id="title" contenteditable="true">ITOM calculator</div>
+        <div id="summary"></div>
+        <div id="filt_1" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">&nbsp;</div></div>
+        <div id="filt_2" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">&nbsp;</div></div>
+        <div id="filt_3" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">&nbsp;</div></div>
+        <div id="filt_4" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">&nbsp;</div></div>
 
         <script type="text/javascript">
       // Make the DIV element draggable:
