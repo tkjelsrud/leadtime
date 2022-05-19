@@ -13,6 +13,12 @@
       font-weight: bold;
       font-size: 16px;
     }
+    #excel {
+      position: absolute;
+      top: 500px;
+      font-family: Georgia, serif;
+      padding: 8px;
+    }
       .node {
           position:absolute;
           cursor:grabbing;
@@ -34,10 +40,10 @@
   <script type="text/javascript" src="common/context.js"></script>
   <script type="text/javascript">
       memory = {'items': [], 'leadTimeData': [], 'leadTimeSum': {}, 'filters': [
-        {'id':'filt_1', 'x': 100, 'y': 100, 'title': 'VD', 'pre': 'item.fields.status.name=="Value Definition"', 'match': 0, 'leadTime': "Value Definition"},
-        {'id':'filt_2', 'x': 300, 'y': 100, 'title': 'ES', 'pre': 'item.fields.status.name=="Explore solutions"', 'match': 0, 'leadTime': "Explore solutions"},
-        {'id':'filt_3', 'x': 500, 'y': 100, 'title': 'SH', 'pre': 'item.fields.status.name=="Specify How"', 'match': 0, 'leadTime': "Specify How"},
-        {'id':'filt_4', 'x': 700, 'y': 100, 'title': 'DL', 'pre': 'item.fields.status.name=="Development Lifecycle"', 'match': 0, 'leadTime': "Development Lifecycle"}
+        {'id':'filt_1', 'x': 100, 'y': 100, 'title': 'VD', 'pre': 'item.fields.status.name=="Value Definition"', 'match': 0, 'leadTime': "Value Definition", 'portfolio': {}},
+        {'id':'filt_2', 'x': 300, 'y': 100, 'title': 'ES', 'pre': 'item.fields.status.name=="Explore solutions"', 'match': 0, 'leadTime': "Explore solutions", 'portfolio': {}},
+        {'id':'filt_3', 'x': 500, 'y': 100, 'title': 'SH', 'pre': 'item.fields.status.name=="Specify How"', 'match': 0, 'leadTime': "Specify How", 'portfolio': {}},
+        {'id':'filt_4', 'x': 700, 'y': 100, 'title': 'DL', 'pre': 'item.fields.status.name=="Development Lifecycle"', 'match': 0, 'leadTime': "Development Lifecycle", 'portfolio': {}}
       ]}
 
       function parsePased(ev) {
@@ -109,7 +115,15 @@
                 if(re) {
                     filt.match++;
                     el.children[1].innerText = filt.match;
+                    
                     el.children[1].style.height = filt.match * 2;
+
+                    if(item.fields.project.key in filt.portfolio)
+                      filt.portfolio[item.fields.project.key]++;
+                    else
+                      filt.portfolio[item.fields.project.key] = 1;
+
+                    el.children[1].title = JSON.stringify(filt.portfolio); 
                 }
             }
         }
@@ -117,6 +131,8 @@
 
       function populateLeadTime() {
         //memory.leadTimeData
+        document.getElementById("excel").innerHTML = "<hr/><br/>KEY,SUMMARY,STATUS,PORTFOLIO,SIZE,LEADTIME-VD,LEADTIME-ES,LEADTIME-SH,LEADTIME-DL"
+
         for(let i = 0; i < memory.items.length; i++) {
             var item = memory.items[i];
 
@@ -125,6 +141,10 @@
             ltArr['size'] = si;
             ltArr['key'] = item.key;
             memory.leadTimeData.push(ltArr);
+            //console.log(ltArr);
+            // Add data to excel view
+            document.getElementById("excel").innerHTML += "<br/>" + item.key + ", " + 
+            item.fields.summary.replaceAll(",", " ") + ", " + item.fields.status.name + ", " + item.fields.project.name + ", " + si + ", " + ltArr['Value Definition'] + ", " + ltArr['Explore solutions'] + ", " + ltArr['Specify How'] + ", " + ltArr['Development Lifecycle'];
         }
       }
 
@@ -208,6 +228,9 @@
         <div id="filt_3" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">&nbsp;</div></div>
         <div id="filt_4" class="node"><div class="title">test</div><div class="bar">&nbsp;</div><div class="leadtime">&nbsp;</div></div>
 
+        <div id="excel">
+
+        </div>
         <script type="text/javascript">
       // Make the DIV element draggable:
 
