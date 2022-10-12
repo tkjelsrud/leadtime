@@ -212,9 +212,9 @@ function chartSummary() {
     const myChart = new Chart(ctx, {
       type: 'pie',
       data: {
-          labels: Object.keys(memory.ppl),
+          labels: Object.keys(data),
           datasets: [{
-              label: 'PPL', 
+              label: 'Teams', 
               backgroundColor: new Array(Object.keys(data).length).fill("").map(x => "#" + Math.floor(Math.random()*16777215).toString(16)),
               data: Object.values(data)
           }
