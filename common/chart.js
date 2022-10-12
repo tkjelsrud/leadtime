@@ -192,7 +192,7 @@ function chartSummary() {
   }
 
  function chartTeams() {
-    const ctx = document.getElementById('myChartTeams').getContext('2d');
+    const ctx = document.getElementById('myChartTeam').getContext('2d');
     const colIdx = {TF: 3};
     const MAXI = 9999;
     
