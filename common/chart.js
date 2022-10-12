@@ -3,7 +3,7 @@
 
 function chartSummary() {
     const ctx = document.getElementById('myChart').getContext('2d');
-  
+    const colIdx = {LT: 9, VD: 10, ES: 11, SH: 12, DL: 13};
     const MAXI = 9999;
     // Warning, poor code ahead
     // This is just a hack for now to summarize some columns (hard coded)
@@ -17,7 +17,7 @@ function chartSummary() {
     };
   
     for(let i = 1; i < rows.length; i++) {
-      let lt = parseInt(rows[i].children[11].textContent);
+      let lt = parseInt(rows[i].children[colIdx.LT].textContent);
       sums.LT.data.push(lt)
       if(lt > sums.LT.max) {
         sums.LT.max = lt;
@@ -28,8 +28,8 @@ function chartSummary() {
         sums.LT.minId = rows[i].children[0].textContent;
       }
   
-      if(rows[i].children[12].textContent.trim() != "") {
-        let vd = parseInt(rows[i].children[12].textContent);
+      if(rows[i].children[colIdx.VD].textContent.trim() != "") {
+        let vd = parseInt(rows[i].children[colIdx.VD].textContent);
         sums.VD.data.push(vd)
         if(vd > sums.VD.max) {
           sums.VD.max = vd;
@@ -41,8 +41,8 @@ function chartSummary() {
         }
       }
   
-      if(rows[i].children[13].textContent.trim() != "") {
-        let es = parseInt(rows[i].children[13].textContent);
+      if(rows[i].children[colIdx.ES].textContent.trim() != "") {
+        let es = parseInt(rows[i].children[colIdx.ES].textContent);
         sums.ES.data.push(es)
         if(es > sums.ES.max) {
           sums.ES.max = es;
@@ -54,8 +54,8 @@ function chartSummary() {
         }
       }
   
-      if(rows[i].children[14].textContent.trim() != "") {
-        let sh = parseInt(rows[i].children[14].textContent);
+      if(rows[i].children[colIdx.SH].textContent.trim() != "") {
+        let sh = parseInt(rows[i].children[colIdx.SH].textContent);
         sums.SH.data.push(sh)
         if(sh > sums.SH.max) {
           sums.SH.max = sh;
@@ -67,8 +67,8 @@ function chartSummary() {
         }
       }
   
-      if(rows[i].children[15].textContent.trim() != "") {
-        let dl = parseInt(rows[i].children[15].textContent);
+      if(rows[i].children[colIdx.DL].textContent.trim() != "") {
+        let dl = parseInt(rows[i].children[colIdx.DL].textContent);
         sums.DL.data.push(dl)
         if(dl > sums.DL.max) {
           sums.DL.max = dl;
@@ -190,4 +190,3 @@ function chartSummary() {
       }
     });
   }
-  
