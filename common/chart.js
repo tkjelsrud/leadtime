@@ -232,7 +232,7 @@ function chartSummary() {
           plugins: {
               title: {
                   display: true,
-                  text: 'Fingerprint (' + Object.keys(memory.ppl).length + ' ppl)'
+                  text: 'Teams involved'
               }
           }
       }
