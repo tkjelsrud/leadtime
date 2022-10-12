@@ -3,7 +3,7 @@
 
 function chartSummary() {
     const ctx = document.getElementById('myChart').getContext('2d');
-    const colIdx = {LT: 9, VD: 10, ES: 11, SH: 12, DL: 13};
+    const colIdx = {LT: 9, VD: 10, ES: 11, SH: 12, DL: 13, TF: 3};
     const MAXI = 9999;
     // Warning, poor code ahead
     // This is just a hack for now to summarize some columns (hard coded)
@@ -169,6 +169,54 @@ function chartSummary() {
               label: 'PPL', 
               backgroundColor: new Array(Object.keys(memory.ppl).length).fill("").map(x => "#" + Math.floor(Math.random()*16777215).toString(16)),
               data: Object.values(memory.ppl)
+          }
+        ]
+      },
+      options: {
+          responsive: true,
+          scales: {
+              y: {
+                  beginAtZero: true,
+                  suggestedMin: 0,
+                  suggestedMax: 3
+              }
+          },
+          plugins: {
+              title: {
+                  display: true,
+                  text: 'Fingerprint (' + Object.keys(memory.ppl).length + ' ppl)'
+              }
+          }
+      }
+    });
+  }
+
+ function chartTeams() {
+    const ctx = document.getElementById('myChartTeams').getContext('2d');
+    const colIdx = {TF: 3};
+    const MAXI = 9999;
+    
+    let rows = document.getElementsByTagName("table")[0].rows;
+    let data = {};
+   
+    for(let i = 1; i < rows.length; i++) {
+      let teams = rows[i].children[colIdx.TF].textContent.split(',');
+      for(let j = 0; j < teams.length; j++) {
+       	if(teams[j] in data)
+          data[teams[j]]++;
+        else
+          data[teams[j]] = 1;
+      }
+    }
+      
+    const myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: Object.keys(memory.ppl),
+          datasets: [{
+              label: 'PPL', 
+              backgroundColor: new Array(Object.keys(data).length).fill("").map(x => "#" + Math.floor(Math.random()*16777215).toString(16)),
+              data: Object.values(data)
           }
         ]
       },
