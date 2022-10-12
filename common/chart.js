@@ -191,7 +191,7 @@ function chartSummary() {
     });
   }
 
- function chartTeams() {
+ function chartTeam() {
     const ctx = document.getElementById('myChartTeam').getContext('2d');
     const colIdx = {TF: 3};
     const MAXI = 9999;
