@@ -112,7 +112,7 @@
   <div id="toolbar">Context: <select id="ctxSelect" onchange="window.location.href = '?' + this.value;"></select> 
     | <a id="lnkGrid" href="#">Data Grid</a> | <a id="lnkTime" href="#">Timeline</a>  
     | <a id="lnkRead" href="#">Readme</a>
-    | <a id="lnkDelete" href="javascript:toggleColumns();">Collapse columns</a>
+    | <a id="lnkDelete" href="javascript:toggleColumns(false);">Collapse columns</a>
     | <a id="lnkDelete" href="javascript:confirm('test');">Delete data in view</a>
     | <span id="selected" style="display:none">&nbsp;</span>
   </div>
@@ -458,13 +458,16 @@ function jiraEpicLeadtime(xo, filter) {
   return {'val': ''};
 }
   
-  function toggleColumns() {
-     var tbl = document.getElementById('id_of_table');
-   var col = tbl.getElementsByTagName('col')[col_no];
-   if (col) {
-     col.style.visibility=do_show?"":"collapse";
-   }
+function toggleColumns(toggle) {
+  var tbl = document.getElementById('dataGrid').children[0];
+  var cols = new Array(2, 5, 6, 7, 8);
+  for(let i = 0; i < cols.length; i++) {
+    var col = tbl.getElementsByTagName('col')[cols[i]];
+    if(col) {
+      col.style.visibility = (toggle ? "" : "collapse");
+    }
   }
+}
 
 function jiraFindStories(xo) {
   // Do a regex in all the text
