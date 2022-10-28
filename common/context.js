@@ -112,3 +112,11 @@ function deleteStoreKey(key) {
   delete memory.items[key];
   storeItemIndex();
 }
+
+function deleteAllItemsInCtx(ctx) {
+  let ind = localStorage.getItem("items" + getSessionCtx());
+  ind = ind.split(";");
+  for(let i = 0; i < ind.length; i++) {
+    deleteStoreKey(ind[i]);
+  }
+}
