@@ -469,7 +469,7 @@ const Color = {
 ],
 get: function(name) {
     for(let i = 0; i < this.risoColors; i++) {
-      if(this.risoColors[i].name == name)
+      if(this.risoColors[i]["name"] == name)
         return this.risoColors[i];
     }
     return null;
