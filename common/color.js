@@ -468,7 +468,7 @@ const Color = {
   }
 ],
 getColor(name) {
-    for(let i = 0; i < Color.risoColors; i++) {
+    for(let i = 0; i < Color.risoColors.length; i++) {
       if(Color.risoColors[i]["name"] == name)
         return Color.risoColors[i];
     }
