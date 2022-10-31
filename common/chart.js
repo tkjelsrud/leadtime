@@ -116,22 +116,22 @@ function chartSummary() {
           labels: ['Leadtime (total)', 'VD', 'ES', 'SH', 'DL'],
           datasets: [{
               label: 'Min', 
-              borderColor: "#e3d2d1",
+              borderColor: Color.fromPool(0).hex,
               data: [sums.LT.min, sums.VD.min, sums.ES.min, sums.SH.min, sums.DL.min]
           },
           {
               label: 'Max',
-              borderColor: "#b82921",
+              borderColor: Color.fromPool(1).hex,
               data: [sums.LT.max, sums.VD.max, sums.ES.max, sums.SH.max, sums.DL.max]
           },
           {
               label: 'Avg',
-              borderColor: "#507fbf",
+              borderColor: Color.fromPool(2).hex,
               data: [sums.LT.avg, sums.VD.avg, sums.ES.avg, sums.SH.avg, sums.DL.avg]
           },
           {
               label: 'Mean',
-              borderColor: "#294294",
+              borderColor: Color.fromPool(3).hex,
               data: [sums.LT.mean, sums.VD.mean, sums.ES.mean, sums.SH.mean, sums.DL.mean]
           }
         
@@ -167,7 +167,7 @@ function chartSummary() {
           labels: Object.keys(memory.ppl),
           datasets: [{
               label: 'PPL', 
-              backgroundColor: new Array(Object.keys(memory.ppl).length).fill("").map(x => "#" + Math.floor(Math.random()*16777215).toString(16)),
+              backgroundColor: new Array(Object.keys(memory.ppl).length).fill("").map(x => Color.random().hex),
               data: Object.values(memory.ppl)
           }
         ]
@@ -215,7 +215,8 @@ function chartSummary() {
           labels: Object.keys(data),
           datasets: [{
               label: 'Teams', 
-              backgroundColor: new Array(Object.keys(data).length).fill("").map(x => "#" + Math.floor(Math.random()*16777215).toString(16)),
+              backgroundColor: new Array(Object.keys(data).length).fill("").map(x => Color.random().hex),
+                                                                                //"#" + Math.floor(Math.random()*16777215).toString(16)
               data: Object.values(data)
           }
         ]
