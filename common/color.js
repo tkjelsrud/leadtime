@@ -475,9 +475,12 @@ getColor(name) {
     }
     return null;
  },
+random() {
+  return Color.risoColors[Math.floor(Math.random() * Color.risoColors.length)];
+},
 fromPool(id) {
   if(id >= Color.pool.length || Color.pool[id] == null)
-    Color.pool[id] = Color.risoColors[Math.floor(Math.random() * Color.risoColors.length)];
+    Color.pool[id] = Color.random();
   return Color.pool[id];
 }
 };
