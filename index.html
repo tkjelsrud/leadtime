@@ -297,6 +297,8 @@ function generateTableRow(table, rowData, columns) {
     //if(typeof rowData[i] === 'object' && 'tip' in rowData[i])
     //  cval.setAttribute("title", rowData[i].tip);
     if('class' in columns[i]) {
+      cell.className = columns[i].class;
+      
       if(columns[i].class == "edit") {
         cell.setAttribute('contentEditable', 'true');
         cell.setAttribute('onblur', 'saveFieldChange("' + row.id + '","' + columns[i].saveTo + '",this);');
