@@ -1,4 +1,12 @@
-[
+const Color = {
+  get: function(name) {
+    for(let i = 0; i < this.risoColors; i++) {
+      if(this.risoColors[i].name == name)
+        return this.risoColors[i];
+    }
+    return null;
+  }
+  risoColors: [
   {
     "name": "Black",
     "hex": "#000000",
@@ -465,4 +473,6 @@
     "pantone": "802 U",
     "zType": "S-7763"
   }
-]
+];
+};
+
