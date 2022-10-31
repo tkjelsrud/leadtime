@@ -1,4 +1,5 @@
 const Color = {
+  pool: [],
   risoColors: [
   {
     "name": "Black",
@@ -473,5 +474,10 @@ getColor(name) {
         return Color.risoColors[i];
     }
     return null;
- }
+ },
+fromPool(id) {
+  if(id >= Color.pool.length || Color.pool[id] == null)
+    Color.pool[id] = Color.risoColors[Math.floor(Math.random() * Color.risoColors.length)];
+  return Color.pool[id];
+}
 };
