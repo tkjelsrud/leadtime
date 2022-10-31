@@ -467,7 +467,7 @@ const Color = {
     "zType": "S-7763"
   }
 ],
-getColor: function(name) {
+getColor(name) {
     for(let i = 0; i < Color.risoColors; i++) {
       if(Color.risoColors[i]["name"] == name)
         return Color.risoColors[i];
