@@ -12,6 +12,8 @@
   <script type="text/javascript" src="common/util.js"></script>
   <script type="text/javascript" src="common/context.js"></script>
   <script type="text/javascript" src="/lib/color.js"></script>
+  <script type="text/javascript" src="common/config.js"></script>
+  <script type="text/javascript" src="common/jira.js"></script>
 </head>
 
 <body onpaste="parsePased(event)">
@@ -27,7 +29,7 @@
   <div id="error" style="display:none">&nbsp;</div>
   <div id="output" style="font-family:Courier">&nbsp;</div>
   
-  <script type="text/javascript" src="common/config.js"></script>
+  
   
 <script type="text/javascript">
   
@@ -38,6 +40,7 @@
   if(jsn) {
     if(validJiraItem(jsn)) {
       showError("JSON received ok!");
+      console.log(jsn);
       let hist = jiraHistory(jsn);
       document.getElementById("output").innerHtml = hist;
     }
