@@ -27,7 +27,7 @@
   </div>
   
   <div id="error" style="display:none">&nbsp;</div>
-  <div id="output" style="font-family:Courier">&nbsp;</div>
+  <div id="output" style="font-family:Courier;font-size:12px;margin-top:20px">&nbsp;</div>
   
   
   
@@ -45,7 +45,7 @@
       document.getElementById("output").innerHTML = "";
       
       document.getElementById("output").innerHTML += jsn.key + " " + jsn.fields.summary;
-      document.getElementById("output").innerHTML += hist;
+      document.getElementById("output").innerHTML += JSON.stringify(hist);
     }
     else {
       showError("JSON received was not parsed as a valid jira item");
