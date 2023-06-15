@@ -1,0 +1,56 @@
+<html>
+  <head>
+  <link rel="stylesheet" type="text/css" href="common/leadtime.css"></link>
+  <title>Jira Leadtime Analysis</title>
+  <link rel="icon" 
+      type="image/png" 
+      href="images/favicon-32x32.png" />
+  
+  <link rel="stylesheet" href="common/style.css" /> 
+  </style>
+
+  <script type="text/javascript" src="common/util.js"></script>
+  <script type="text/javascript" src="common/context.js"></script>
+  <script type="text/javascript" src="/lib/color.js"></script>
+</head>
+
+<body onpaste="parsePased(event)">
+    <div id="toolbar">Context: <select id="ctxSelect" onchange="window.location.href = '?' + this.value;"></select> 
+    | <a id="lnkGrid" href="#">Data Grid</a> | <a id="lnkTime" href="#">Timeline</a>  
+    | <a id="lnkRead" href="#">Readme</a>
+    | <a id="lnkDelete" href="javascript:toggleColumns(false);">Collapse columns</a>
+    | <a id="lnkDelete" href="javascript:confirm('test');">Delete data in view</a>
+    | <a href="inspect.html">Inspect JSON</a>
+    | <span id="selected" style="display:none">&nbsp;</span>
+  </div>
+  
+  <div id="error" style="display:none">&nbsp;</div>
+  <div id="output" style="font-family:Courier">&nbsp;</div>
+  
+  <script type="text/javascript" src="common/config.js"></script>
+  
+<script type="text/javascript">
+  
+  function parsePased(ev) {
+  //console.log(ev);
+  data = ev.clipboardData.getData("text/plain");
+  jsn  = jsonParse(data);
+  if(jsn) {
+    if(validJiraItem(jsn)) {
+      showError("JSON received ok!");
+      let hist = jiraHistory(jsn);
+      document.getElementById("output").innerHtml = hist;
+    }
+    else {
+      showError("JSON received was not parsed as a valid jira item");
+    }
+  }
+  else {
+    showError("Value pasted was not parsed as valid JSON");
+  }
+  
+  return false;
+}
+  </script>
+</body>
+</html>
