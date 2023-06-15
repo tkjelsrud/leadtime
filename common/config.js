@@ -37,6 +37,7 @@ let configStory = {
     {'title': "Labels", 'eval': "xo.fields.labels.join(' ')"},
     {'title': "Data", 'eval': "xo.fields.description.length + ' ' + xo.fields.attachment.length + 'A'", 'class': 'narrow'},
     {'title': "Social", 'eval': "jiraSocialCount(xo)", 'class': 'narrow'},
+    {'title': "Sprints", 'eval': "xo.fields.customfield_10100"},
     {'title': "History", 'eval': "jiraHistory(xo)"},
     {'title': "Leadtime", 'eval': "jiraLeadtime(xo)", 'class': "narrow"},
     {'title': "LT Ana", 'eval': "jiraEpicLeadtime(xo, 'Analysis')", 'class': "narrownum", 'sum': true, 'style': 'dayScale'},
