@@ -44,7 +44,8 @@
       let hist = jiraHistory(jsn);
       document.getElementById("output").innerHTML = "";
       
-      document.getElementById("output").innerHTML += jsn.key + " " + jsn.fields.summary;
+      document.getElementById("output").innerHTML += jsn.key + " " + jsn.fields.summary + "<br/>";
+      document.getElementById("output").innerHTML += JSON.stringify(jsn.fields.customfield_10100) + "<br/>";
       document.getElementById("output").innerHTML += JSON.stringify(hist);
     }
     else {
