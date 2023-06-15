@@ -42,7 +42,10 @@
       showError("JSON received ok!");
       console.log(jsn);
       let hist = jiraHistory(jsn);
-      document.getElementById("output").innerHtml = hist;
+      document.getElementById("output").innerHtml = "";
+      
+      document.getElementById("output").innerHtml += xo.key + " " + xo.fields.summary;
+      document.getElementById("output").innerHtml += hist;
     }
     else {
       showError("JSON received was not parsed as a valid jira item");
