@@ -75,9 +75,9 @@ function jiraSocialCount(xo) {
 
 
 function jiraHistory(xo) {
-  let res = "";
+  let res = new Array();
   if(!xo.changelog || !("histories" in xo.changelog))
-    return res;
+    return null;
   // TODO: generated too much string data, right now just rememers last line
   //
   for(let i = 0; i < xo.changelog.histories.length; i++) {
@@ -85,13 +85,15 @@ function jiraHistory(xo) {
     
     for(let j = 0; j < hi.items.length; j++) {
       let it = hi.items[j];
+      if(it.field == "assignee" && it.from == null)
+        res.push(shortDate(hi.created) + " first assign->" + it.toString;
       if(it.field == "resolution")
-        res = shortDate(hi.created) + " reso->" + it.toString + " ";
+        res.push(shortDate(hi.created) + " reso->" + it.toString + " ");
       if(it.field == "status")
-        res = shortDate(hi.created) + " " + it.fromString + "->" + it.toString + " "; //it.fromString 
+        res.push(shortDate(hi.created) + " " + it.fromString + "->" + it.toString + " ");
     }
   }
-  return {'val': res};
+  return res;
 }
   
 function jiraEpicLinks(xo) {
