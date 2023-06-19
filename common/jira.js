@@ -86,11 +86,11 @@ function jiraHistory(xo) {
     for(let j = 0; j < hi.items.length; j++) {
       let it = hi.items[j];
       if(it.field == "assignee" && it.from == null)
-        res.push(shortDate(hi.created) + " first assign->" + it.toString;
+        res.push(shortDate(hi.created), "First assign:" + it.toString);
       if(it.field == "resolution")
-        res.push(shortDate(hi.created) + " reso->" + it.toString + " ");
+        res.push(shortDate(hi.created), "Resolved:" + it.toString + " ");
       if(it.field == "status")
-        res.push(shortDate(hi.created) + " " + it.fromString + "->" + it.toString + " ");
+        res.push(shortDate(hi.created), "Status:" + it.fromString + "->" + it.toString);
     }
   }
   return res;
