@@ -78,7 +78,9 @@ function jiraHistory(xo) {
   let res = new Array();
   if(!xo.changelog || !("histories" in xo.changelog))
     return null;
-  // TODO: generated too much string data, right now just rememers last line
+  
+  // TODO:
+  // add the created timestamp as first data point
   //
   for(let i = 0; i < xo.changelog.histories.length; i++) {
     let hi = xo.changelog.histories[i];
