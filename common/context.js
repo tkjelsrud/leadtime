@@ -68,7 +68,7 @@ function jsonParse(data) {
   
 function validJiraItem(jsn) {
   if(!("fields" in jsn)) return false;
-  if(!("changelog" in jsn)) return false;
+  //if(!("changelog" in jsn)) return false;
   
   return true;
 }
